@@ -136,34 +136,10 @@ const Storage = {
   },
 
   /**
-   * Recupera estado do app
-   */
-  getAppState() {
-    return this.get('app_state');
-  },
-
-  /**
    * Limpa estado do app
    */
   clearAppState() {
     this.remove('app_state');
-  },
-
-  /**
-   * Salva configurações de usuário
-   */
-  saveUserPreferences(preferences) {
-    this.set('user_preferences', preferences);
-  },
-
-  /**
-   * Recupera preferências do usuário
-   */
-  getUserPreferences() {
-    return this.get('user_preferences', {
-      language: 'pt-BR',
-      theme: 'light'
-    });
   },
 
   /**

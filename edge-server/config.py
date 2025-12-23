@@ -69,7 +69,7 @@ class SaaSConfig:
     )
     
     # Sync interval (seconds) - 0 = DESABILITADO (App reporta diretamente)
-    SYNC_INTERVAL: int = 0
+    SYNC_INTERVAL: int = 15
     
     # Connection timeout (seconds)
     TIMEOUT: int = 10
@@ -96,6 +96,36 @@ class ServerConfig:
     DEBUG: bool = os.getenv("EDGE_DEBUG", "true").lower() == "true"  # Habilitado para desenvolvimento
 
 
+@dataclass
+class MercadoPagoConfig:
+    """Mercado Pago Payment Configuration"""
+    # Access token for MP API
+    ACCESS_TOKEN: str = os.getenv(
+        "MP_ACCESS_TOKEN",
+        "APP_USR-TEST-1234567890"  # Sandbox token (replace with production)
+    )
+    
+    # Integrator ID (optional, for partner integrations)
+    INTEGRATOR_ID: str = os.getenv("MP_INTEGRATOR_ID", "")
+    
+    # Store and POS identifiers
+    STORE_ID: str = os.getenv("MP_STORE_ID", "")
+    POS_ID: str = os.getenv("MP_POS_ID", "")
+    
+    # Notification/Webhook URL
+    NOTIFICATION_URL: str = os.getenv(
+        "MP_NOTIFICATION_URL",
+        "http://localhost:5000/edge/webhooks/mercadopago"
+    )
+    
+    # Payment timeout (seconds)
+    PAYMENT_TIMEOUT: int = 300
+    
+    # Enable mock payments for development
+    # Default true for dev so kiosk funciona sem credenciais/maquininha
+    MOCK_PAYMENTS: bool = os.getenv("MP_MOCK", "true").lower() == "true"
+
+
 class Config:
     """Main Configuration Container"""
     gpio = GPIOConfig()
@@ -103,6 +133,7 @@ class Config:
     saas = SaaSConfig()
     database = DatabaseConfig()
     server = ServerConfig()
+    mercadopago = MercadoPagoConfig()
     
     # Tap configuration (maps tap_id to beverage)
     # In production, this would be fetched from SaaS

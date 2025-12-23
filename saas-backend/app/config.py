@@ -3,11 +3,17 @@ Configurações do SaaS Backend
 """
 from pydantic_settings import BaseSettings
 from functools import lru_cache
+from pathlib import Path
+
+
+# Caminho absoluto para o banco na raiz do projeto (D:/Front_Bier/bierpass.db)
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+DATABASE_PATH = BASE_DIR / "bierpass.db"
 
 
 class Settings(BaseSettings):
-    # Database
-    database_url: str = "sqlite:///./bierpass.db"
+    # Database (fixo e absoluto para evitar múltiplos arquivos em cwd diferentes)
+    database_url: str = f"sqlite:///{DATABASE_PATH}"
     
     # Auth
     secret_key: str = "BIERPASS_DEV_SECRET_KEY_CHANGE_IN_PRODUCTION_2025"

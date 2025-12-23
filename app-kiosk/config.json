@@ -15,12 +15,15 @@
     "api_key": "sk_eKZVLSB56JEajCN70PJ4ResGqxH1B3L3W7CgNrJGIq4"
   },
   "payment_sdk": {
-    "_comment": "Providers: mock, stone, cielo, pagseguro",
-    "provider": "mock",
-    "connection": "usb",
-    "device_id": null,
-    "card_timeout_ms": 120000,
-    "pix_timeout_ms": 300000
+    "_comment": "Integração local com Mercado Pago via EDGE - Suporta PIX, Débito, Crédito, QR",
+    "edge_payments_url": "http://localhost:5000/edge/payments",
+    "payment_types": ["PIX", "DEBIT", "CREDIT", "QR"],
+    "polling_interval_ms": 1000,
+    "pix_timeout_ms": 300000,
+    "debit_timeout_ms": 120000,
+    "credit_timeout_ms": 120000,
+    "qr_timeout_ms": 300000,
+    "retry_attempts": 3
   },
   "ui": {
     "polling_ms": 300,

@@ -509,9 +509,18 @@ const UI = {
         
       case 'PIX_GENERATED':
         if (qrContainer && data.qrCodeBase64) {
-          qrContainer.innerHTML = `
-            <img src="${data.qrCodeBase64}" alt="QR Code PIX" class="pix-qr-image" />
-          `;
+          const isValidImg = typeof data.qrCodeBase64 === 'string'
+            && data.qrCodeBase64.startsWith('data:image')
+            && data.qrCodeBase64.length > 50;
+
+          qrContainer.innerHTML = isValidImg
+            ? `<img src="${data.qrCodeBase64}" alt="QR Code PIX" class="pix-qr-image" />`
+            : `
+                <div class="pix-code-fallback">
+                  <p>Copie o código PIX:</p>
+                  <pre>${data.qrCode || 'QR não disponível'}</pre>
+                </div>
+              `;
         }
         break;
         
@@ -544,14 +553,6 @@ const UI = {
         }
         break;
     }
-  },
-
-  /**
-   * TELA: PAYMENT_PROCESSING (legado - redireciona para AWAITING_PAYMENT)
-   */
-  render_PAYMENT_PROCESSING(data) {
-    // Redireciona para novo render
-    this.render_AWAITING_PAYMENT(data);
   },
 
   /**
@@ -718,34 +719,98 @@ const UI = {
     const percentageSpan = document.getElementById('dispensing-percentage');
     const statusText = document.querySelector('.status-text');
 
-    if (barra) {
-      barra.style.width = Math.min(percentage, 100) + '%';
+    // Estado do EDGE (para evitar regressões ao completar)
+    const edgeStatus = (dispenserData.status || status.state || '').toString().toUpperCase();
+
+    // Animação suave: incrementa ml e % entre o valor atual mostrado e o novo alvo
+    const targetMl = Math.max(0, Math.round(ml_served));
+    const targetPct = Math.min(100, Math.max(0, percentage));
+
+    // Estado interno da animação
+    this._dispenseAnim = this._dispenseAnim || { ml: 0, pct: 0, timer: null };
+
+    // Inicializa se ainda não há valor
+    if (!Number.isFinite(this._dispenseAnim.ml)) {
+      this._dispenseAnim.ml = 0;
     }
-    
-    if (mlServed) {
-      mlServed.textContent = Math.round(ml_served);
-    }
-    
-    if (percentageSpan) {
-      percentageSpan.textContent = Math.min(percentage, 100);
+    if (!Number.isFinite(this._dispenseAnim.pct)) {
+      this._dispenseAnim.pct = 0;
     }
 
-    // Atualiza mensagem de status baseado no progresso
+    // Evita regressão visual quando EDGE reporta 0ml após finalizar
+    // Se EDGE sinaliza COMPLETED/FINISHED, força alvo para 100%/volume autorizado
+    if (targetMl < this._dispenseAnim.ml && (edgeStatus === 'COMPLETED' || edgeStatus === 'FINISHED')) {
+      // Corrige alvo para o final esperado
+      const forcedPct = 100;
+      const forcedMl = Math.max(this._dispenseAnim.ml, volumeAuthorized);
+      if (mlServed) mlServed.textContent = forcedMl;
+      if (percentageSpan) percentageSpan.textContent = forcedPct;
+      if (barra) barra.style.width = forcedPct + '%';
+      this._dispenseAnim.ml = forcedMl;
+      this._dispenseAnim.pct = forcedPct;
+    } else if (targetMl <= this._dispenseAnim.ml) {
+      // Não reduzir a barra durante DISPENSING; apenas sincroniza se igual
+      if (targetMl === this._dispenseAnim.ml) {
+        if (mlServed) mlServed.textContent = targetMl;
+        if (percentageSpan) percentageSpan.textContent = targetPct;
+        if (barra) barra.style.width = targetPct + '%';
+      }
+      // Se for menor e ainda DISPENSING, ignora para manter suavidade
+    } else {
+      // Incrementa de 1ml em 1ml até o alvo
+      // Calcula o delay por passo baseado na velocidade configurada e na distância
+      const speedBase = (this.config?.ui?.barra_animation_speed_ms ?? 100); // padrão 100ms
+      const deltaMl = targetMl - this._dispenseAnim.ml;
+      const stepDelay = Math.max(10, Math.floor(speedBase / Math.max(deltaMl, 1)));
+
+      // Limpa animação anterior
+      if (this._dispenseAnim.timer) {
+        clearInterval(this._dispenseAnim.timer);
+        this._dispenseAnim.timer = null;
+      }
+
+      this._dispenseAnim.timer = setInterval(() => {
+        // Próximo ml
+        if (this._dispenseAnim.ml < targetMl) {
+          this._dispenseAnim.ml += 1;
+
+          // Recalcula % com base no volume autorizado
+          const pctNow = Math.min(100, Math.round((this._dispenseAnim.ml / Math.max(volumeAuthorized, 1)) * 100));
+          this._dispenseAnim.pct = pctNow;
+
+          if (mlServed) mlServed.textContent = this._dispenseAnim.ml;
+          if (percentageSpan) percentageSpan.textContent = pctNow;
+          if (barra) barra.style.width = pctNow + '%';
+        }
+
+        // Finaliza ao atingir o alvo
+        if (this._dispenseAnim.ml >= targetMl) {
+          clearInterval(this._dispenseAnim.timer);
+          this._dispenseAnim.timer = null;
+        }
+      }, stepDelay);
+    }
+
+    // Atualiza mensagem de status baseado no progresso exibido
     if (statusText) {
-      if (percentage < 25) {
+      const shownPct = Number.isFinite(this._dispenseAnim.pct) ? this._dispenseAnim.pct : targetPct;
+      if (shownPct < 25) {
         statusText.innerHTML = '<span class="status-icon">🔄</span> Iniciando extração...';
-      } else if (percentage < 50) {
+      } else if (shownPct < 50) {
         statusText.innerHTML = '<span class="status-icon">💧</span> Servindo bebida...';
-      } else if (percentage < 75) {
+      } else if (shownPct < 75) {
         statusText.innerHTML = '<span class="status-icon">✨</span> Quase lá...';
-      } else if (percentage < 100) {
+      } else if (shownPct < 100) {
         statusText.innerHTML = '<span class="status-icon">🎯</span> Finalizando...';
       } else {
         statusText.innerHTML = '<span class="status-icon">✅</span> Concluído!';
       }
     }
 
-    this.log('Progress atualizado:', percentage + '%', Math.round(ml_served) + 'ml');
+    // Log com valores apresentados (suavizados)
+    const shownPctLog = Number.isFinite(this._dispenseAnim.pct) ? this._dispenseAnim.pct : targetPct;
+    const shownMlLog = Number.isFinite(this._dispenseAnim.ml) ? this._dispenseAnim.ml : targetMl;
+    this.log('Progress atualizado:', Math.round(shownPctLog) + '%', Math.round(shownMlLog) + 'ml');
   },
 
   /**

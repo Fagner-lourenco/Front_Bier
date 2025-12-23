@@ -1,12 +1,13 @@
 """
 Endpoints para consumptions (registros de dispensa)
 """
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from ..database import get_db
 from ..models import Consumption, Sale, Machine
 from ..schemas import ConsumptionCreate, ConsumptionResponse
+from ..utils.auth import get_machine_by_api_key
 
 router = APIRouter()
 
@@ -14,7 +15,8 @@ router = APIRouter()
 @router.post("", response_model=ConsumptionResponse)
 async def create_consumption(
     consumption_data: ConsumptionCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    machine: Machine = Depends(get_machine_by_api_key)
 ):
     """
     Registra uma dispensa de bebida
@@ -26,6 +28,13 @@ async def create_consumption(
         
         if not consumption_data.machine_id:
             raise HTTPException(status_code=400, detail="machine_id é obrigatório")
+
+        # machine_id do corpo deve bater com a máquina autenticada
+        if consumption_data.machine_id != machine.id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="machine_id in payload does not match authenticated machine"
+            )
         
         # Verifica se sale existe
         sale = db.query(Sale).filter(Sale.id == consumption_data.sale_id).first()
@@ -54,6 +63,17 @@ async def create_consumption(
         db.add(consumption)
         db.commit()
         db.refresh(consumption)
+
+        # Atualiza status da sale vinculada conforme resultado do consumo
+        if sale:
+            if consumption_data.status == "OK":
+                sale.status = "completed"
+            elif consumption_data.status == "PARTIAL":
+                sale.status = "partial"
+            else:
+                sale.status = "failed"
+            db.commit()
+            db.refresh(sale)
         
         return consumption
         

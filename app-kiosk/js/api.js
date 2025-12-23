@@ -103,25 +103,6 @@ const API = {
   },
 
   /**
-   * POST /api/v1/authorize - Autoriza transação após pagamento
-   */
-  /**
-   * POST /api/v1/authorize - Autoriza pagamento (LEGADO - mantido para compatibilidade)
-   * @deprecated Use PaymentSDK.startTransaction() + API.registerSale()
-   */
-  async authorize(machineId, beverageId, volumeMl, paymentMethod, totalValue) {
-    const url = `${this.baseUrlSaaS}/api/v1/authorize`;
-    const data = {
-      machine_id: machineId,
-      beverage_id: beverageId,
-      volume_ml: volumeMl,
-      payment_method: paymentMethod,
-      total_value: totalValue
-    };
-    return this.request('POST', url, data);
-  },
-
-  /**
    * POST /api/v1/sales - Registra venda após pagamento aprovado pelo SDK
    */
   async registerSale(saleData) {

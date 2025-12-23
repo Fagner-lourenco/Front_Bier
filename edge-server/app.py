@@ -21,6 +21,7 @@ from gpio_controller import gpio_controller
 from dispenser import dispenser, DispenseStatus
 from token_validator import token_validator
 from sync_service import sync_service
+from payment_service import payment_service
 
 
 # ==================== App Setup ====================
@@ -253,6 +254,207 @@ def test_dispense():
         "test": True,
         "result": result.to_dict()
     })
+
+
+# ==================== Mercado Pago Payment Routes ====================
+
+@app.route('/edge/payments/start', methods=['POST'])
+def start_payment():
+    """
+    Start a payment (PIX, DEBIT, CREDIT, or QR)
+    
+    Request:
+    {
+        "amount": 12.50,
+        "volume_ml": 300,
+        "beverage_id": "uuid",
+        "payment_type": "PIX" | "DEBIT" | "CREDIT" | "QR",
+        "external_reference": "sale-id-optional",
+        "payer_email": "optional@email.com",
+        "installments": 1 (only for CREDIT)
+    }
+    
+    Response (200):
+    {
+        "success": true,
+        "payment_id": "mp-payment-id",
+        "payment_type": "PIX" | "DEBIT" | "CREDIT",
+        "qr_code": "PIX emv string or instructions",
+        "qr_base64": "data:image/svg+xml;base64,...",
+        "instructions": "User-friendly instructions",
+        "expires_at": "2025-12-23T19:30:00Z",
+        "status": "pending"
+    }
+    
+    Response (400/500):
+    {
+        "success": false,
+        "error": "error message"
+    }
+    """
+    try:
+        data = request.get_json()
+        
+        if not data:
+            return jsonify({
+                "success": False,
+                "error": "Request body required"
+            }), 400
+        
+        amount = data.get('amount')
+        volume_ml = data.get('volume_ml')
+        payment_type = data.get('payment_type', 'PIX').upper()
+        external_reference = data.get('external_reference')
+        payer_email = data.get('payer_email')
+        installments = data.get('installments', 1)
+        
+        if not amount or not payment_type:
+            return jsonify({
+                "success": False,
+                "error": "Missing amount or payment_type"
+            }), 400
+        
+        # Validate payment type
+        valid_types = ['PIX', 'DEBIT', 'CREDIT', 'QR']
+        if payment_type not in valid_types:
+            return jsonify({
+                "success": False,
+                "error": f"Invalid payment_type. Must be one of: {', '.join(valid_types)}"
+            }), 400
+        
+        # Create payment
+        description = f"{volume_ml}ml - BierPass"
+        success, result = payment_service.create_payment(
+            payment_type=payment_type,
+            amount=amount,
+            description=description,
+            external_reference=external_reference,
+            payer_email=payer_email,
+            installments=installments
+        )
+        
+        if not success:
+            logger.warning(f"Payment creation failed: {result.get('error')}")
+            return jsonify({
+                "success": False,
+                "error": result.get('error', 'Unknown error')
+            }), 400
+        
+        result['success'] = True
+        result['payment_type'] = payment_type
+        
+        logger.info(f"✅ Payment started: {result.get('payment_id')} ({payment_type})")
+        return jsonify(result), 200
+        
+    except Exception as e:
+        logger.error(f"Start payment error: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+
+@app.route('/edge/payments/status/<payment_id>', methods=['GET'])
+def get_payment_status(payment_id):
+    """
+    Get current status of a payment (PIX)
+    
+    Response (200):
+    {
+        "success": true,
+        "payment_id": "id",
+        "status": "pending|approved|rejected|cancelled|expired",
+        "approved": true|false,
+        "amount": 12.50,
+        "reference": "sale-id",
+        "pix_e2e_id": "comprovante-pix-optional",
+        "created_at": "2025-12-23T19:20:00Z"
+    }
+    """
+    try:
+        success, result = payment_service.get_payment_status(payment_id)
+        
+        if not success:
+            return jsonify({
+                "success": False,
+                "error": result.get('error', 'Payment not found')
+            }), 404
+        
+        result['success'] = True
+        return jsonify(result), 200
+        
+    except Exception as e:
+        logger.error(f"Get payment status error: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+
+@app.route('/edge/payments/order/status/<order_id>', methods=['GET'])
+def get_order_status(order_id):
+    """
+    Get current status of a QR order (merchant_order)
+    """
+    try:
+        success, result = payment_service.get_order_status(order_id)
+        
+        if not success:
+            return jsonify({
+                "success": False,
+                "error": result.get('error', 'Order not found')
+            }), 404
+        
+        result['success'] = True
+        return jsonify(result), 200
+        
+    except Exception as e:
+        logger.error(f"Get order status error: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+
+@app.route('/edge/webhooks/mercadopago', methods=['POST'])
+def mercadopago_webhook():
+    """
+    Receive webhooks from Mercado Pago
+    
+    Body:
+    {
+        "type": "payment" | "merchant_order",
+        "data": {
+            "id": "payment-id-or-order-id"
+        }
+    }
+    """
+    try:
+        data = request.get_json() or {}
+        event_type = data.get('type')
+        event_data = data.get('data', {})
+        resource_id = event_data.get('id')
+        
+        logger.info(f"📩 MP Webhook: type={event_type}, id={resource_id}")
+        
+        if event_type == 'payment':
+            # Payment status changed
+            success, payment_info = payment_service.get_payment_status(resource_id)
+            if success:
+                logger.info(f"✅ Payment webhook: {resource_id} -> {payment_info.get('status')}")
+        
+        elif event_type == 'merchant_order':
+            # Order payment status changed
+            success, order_info = payment_service.get_order_status(resource_id)
+            if success:
+                logger.info(f"✅ Order webhook: {resource_id} -> {order_info.get('status')}")
+        
+        # Always return 200 to acknowledge receipt
+        return jsonify({"received": True}), 200
+        
+    except Exception as e:
+        logger.error(f"Webhook error: {e}")
+        return jsonify({"error": str(e)}), 500
 
 
 # ==================== Error Handlers ====================

@@ -1659,3 +1659,595 @@ UnicodeEncodeError: 'charmap' codec can't encode character '\u274c' in position 
 2025-12-23 13:07:19,966 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 13:07:19] "GET /edge/status HTTP/1.1" 200 -
 2025-12-23 13:07:22,702 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 13:07:22] "GET /edge/status HTTP/1.1" 200 -
 2025-12-23 13:07:25,043 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 13:07:25] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 13:39:12,964 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 13:39:12] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 13:39:13,235 - edge-server - INFO - Token validated for sale 7db1201c-51a9-4862-8d01-b426d76afb6c, 300ml
+2025-12-23 13:39:13,243 - edge-server - INFO - Dispense started in background for sale 7db1201c-51a9-4862-8d01-b426d76afb6c, 300ml
+2025-12-23 13:39:13,243 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 13:39:13] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 13:39:14,290 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 13:39:14] "OPTIONS /edge/status HTTP/1.1" 200 -
+2025-12-23 13:39:16,683 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 13:39:16] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 13:39:18,772 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 13:39:18] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 13:39:21,480 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 13:39:21] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 13:39:23,874 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 13:39:23] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 13:39:26,297 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 13:39:26] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 13:39:28,658 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 13:39:28] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 13:39:31,095 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 13:39:31] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:31:20,742 - edge-server - INFO - Token validated for sale 36d31cc5-9016-444c-b242-1d02ea5cc0df, 300ml
+2025-12-23 14:31:20,743 - edge-server - INFO - Dispense started in background for sale 36d31cc5-9016-444c-b242-1d02ea5cc0df, 300ml
+2025-12-23 14:31:20,744 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:31:20] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 14:31:23,914 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:31:23] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:31:26,579 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:31:26] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:31:28,965 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:31:28] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:31:31,384 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:31:31] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:31:33,499 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:31:33] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:31:36,196 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:31:36] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:31:38,598 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:31:38] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:57:30,777 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:57:30] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 14:57:31,046 - edge-server - INFO - Token validated for sale fe0585bb-f689-48c1-9278-51045f5c4706, 500ml
+2025-12-23 14:57:31,049 - edge-server - INFO - Dispense started in background for sale fe0585bb-f689-48c1-9278-51045f5c4706, 500ml
+2025-12-23 14:57:31,050 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:57:31] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 14:57:32,103 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:57:32] "OPTIONS /edge/status HTTP/1.1" 200 -
+2025-12-23 14:57:34,537 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:57:34] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:57:36,885 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:57:36] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:57:39,635 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:57:39] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:57:42,333 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:57:42] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:57:45,639 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:57:45] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:57:48,319 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:57:48] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:57:51,629 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:57:51] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:57:54,315 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:57:54] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:57:57,614 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:57:57] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 14:57:59,953 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 14:57:59] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 15:03:32,191 - edge-server - INFO - Token validated for sale 29cc0991-7520-4b46-82f3-d4a5e9d4849a, 500ml
+2025-12-23 15:03:32,195 - edge-server - INFO - Dispense started in background for sale 29cc0991-7520-4b46-82f3-d4a5e9d4849a, 500ml
+2025-12-23 15:03:32,197 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 15:03:32] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 15:03:35,358 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 15:03:35] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 15:03:38,629 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 15:03:38] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 15:03:41,351 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 15:03:41] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 15:03:44,633 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 15:03:44] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 15:03:47,345 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 15:03:47] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 15:03:50,623 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 15:03:50] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 15:03:53,347 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 15:03:53] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 15:03:56,614 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 15:03:56] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 15:03:59,292 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 15:03:59] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 15:22:59,155 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\config.py', reloading
+2025-12-23 15:22:59,159 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 15:22:59,161 - edge-server - INFO -   Sync service stopped
+2025-12-23 15:22:59,164 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 15:22:59,166 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 15:22:59,273 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 15:22:59,707 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 15:22:59,708 - edge-server - INFO - ✅ Database initialized
+2025-12-23 15:22:59,709 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 15:22:59,710 - edge-server - INFO - ✅ Sync service started
+2025-12-23 15:22:59,710 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 15:22:59,745 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 15:22:59,749 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 16:03:43,723 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:03:43] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 16:03:44,001 - edge-server - INFO - Token validated for sale d239199b-53f9-4b3f-844d-82a5a509c38b, 300ml
+2025-12-23 16:03:44,002 - edge-server - INFO - Dispense started in background for sale d239199b-53f9-4b3f-844d-82a5a509c38b, 300ml
+2025-12-23 16:03:44,003 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:03:44] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 16:03:45,300 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:03:45] "OPTIONS /edge/status HTTP/1.1" 200 -
+2025-12-23 16:03:47,685 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:03:47] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:03:50,315 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:03:50] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:03:53,633 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:03:53] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:03:56,302 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:03:56] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:03:59,632 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:03:59] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:04:01,765 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:04:01] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:04:28,356 - edge-server - INFO - Token validated for sale be9e6fb8-d480-4cc5-a8d8-0dd0e9868e5b, 300ml
+2025-12-23 16:04:28,358 - edge-server - INFO - Dispense started in background for sale be9e6fb8-d480-4cc5-a8d8-0dd0e9868e5b, 300ml
+2025-12-23 16:04:28,360 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:04:28] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 16:04:31,481 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:04:31] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:04:33,897 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:04:33] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:04:36,262 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:04:36] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:04:39,618 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:04:39] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:04:42,351 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:04:42] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:04:45,620 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:04:45] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:11:26,794 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\config.py', reloading
+2025-12-23 16:11:26,814 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 16:11:31,822 - edge-server - INFO -   Sync service stopped
+2025-12-23 16:11:31,823 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 16:11:31,824 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 16:11:31,883 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 16:11:32,389 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 16:11:32,391 - edge-server - INFO - ✅ Database initialized
+2025-12-23 16:11:32,391 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 16:11:32,392 - edge-server - INFO - ✅ Sync service started
+2025-12-23 16:11:32,392 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 16:11:32,441 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 16:11:32,444 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 16:12:17,123 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\dispenser.py', reloading
+2025-12-23 16:12:17,124 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 16:12:22,137 - edge-server - INFO -   Sync service stopped
+2025-12-23 16:12:22,138 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 16:12:22,139 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 16:12:22,222 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 16:12:22,590 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 16:12:22,591 - edge-server - INFO - ✅ Database initialized
+2025-12-23 16:12:22,592 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 16:12:22,592 - edge-server - INFO - ✅ Sync service started
+2025-12-23 16:12:22,592 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 16:12:22,625 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 16:12:22,628 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 16:13:43,403 - edge-server - INFO - Token validated for sale 69d43acd-a20d-4767-af30-b9ebf788950f, 300ml
+2025-12-23 16:13:43,404 - edge-server - INFO - Dispense started in background for sale 69d43acd-a20d-4767-af30-b9ebf788950f, 300ml
+2025-12-23 16:13:43,421 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:13:43] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 16:13:46,545 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:13:46] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:13:48,977 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:13:48] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:13:51,333 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:13:51] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:13:53,765 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:13:53] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:13:56,124 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:13:56] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:13:58,539 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:13:58] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:14:01,316 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:14:01] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:15:23,015 - edge-server - INFO - Token validated for sale a79afe92-6069-4578-a6c2-d75236397f0c, 300ml
+2025-12-23 16:15:23,016 - edge-server - INFO - Dispense started in background for sale a79afe92-6069-4578-a6c2-d75236397f0c, 300ml
+2025-12-23 16:15:23,016 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:15:23] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 16:15:26,139 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:15:26] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:15:28,516 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:15:28] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:15:30,608 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:15:30] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:15:33,050 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:15:33] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:15:35,401 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:15:35] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:15:37,827 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:15:37] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:15:39,937 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:15:39] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:15:42,607 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:15:42] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:17:18,385 - edge-server - INFO - Token validated for sale 1c52c335-3f26-4960-b2d8-f17f68c1e071, 300ml
+2025-12-23 16:17:18,387 - edge-server - INFO - Dispense started in background for sale 1c52c335-3f26-4960-b2d8-f17f68c1e071, 300ml
+2025-12-23 16:17:18,388 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:17:18] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 16:17:21,496 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:17:21] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:17:23,904 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:17:23] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:17:25,987 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:17:25] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:17:28,437 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:17:28] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:17:30,802 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:17:30] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:17:33,635 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:17:33] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:17:36,320 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:17:36] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:17:53,415 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 16:17:58,540 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 16:17:58,541 - edge-server - INFO -   Sync service stopped
+2025-12-23 16:17:58,542 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 16:17:58,542 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 16:18:00,905 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 16:18:00,906 - edge-server - INFO - ✅ Database initialized
+2025-12-23 16:18:00,906 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 16:18:00,906 - edge-server - INFO - ✅ Sync service started
+2025-12-23 16:18:00,907 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 16:18:00,953 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-12-23 16:18:00,953 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-23 16:18:00,955 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 16:18:01,261 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 16:18:01,263 - edge-server - INFO - ✅ Database initialized
+2025-12-23 16:18:01,263 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 16:18:01,264 - edge-server - INFO - ✅ Sync service started
+2025-12-23 16:18:01,264 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 16:18:01,294 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 16:18:01,297 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 16:18:15,578 - edge-server - INFO - Token validated for sale 78331c7a-26ad-4cdd-bca8-ccacfb761647, 300ml
+2025-12-23 16:18:15,579 - edge-server - INFO - Dispense started in background for sale 78331c7a-26ad-4cdd-bca8-ccacfb761647, 300ml
+2025-12-23 16:18:15,580 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:18:15] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 16:18:18,677 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:18:18] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:18:21,103 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:18:21] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:18:23,520 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:18:23] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:18:26,191 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:18:26] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:18:28,338 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:18:28] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:18:31,616 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:18:31] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:18:34,310 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:18:34] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:23:36,466 - edge-server - INFO - Token validated for sale 2ef40dbe-9e89-4574-a297-616696cd936d, 300ml
+2025-12-23 16:23:36,467 - edge-server - INFO - Dispense started in background for sale 2ef40dbe-9e89-4574-a297-616696cd936d, 300ml
+2025-12-23 16:23:36,467 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:23:36] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 16:23:39,522 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:23:39] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:23:41,977 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:23:41] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:23:44,054 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:23:44] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:23:46,448 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:23:46] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:23:48,559 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:23:48] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:23:50,979 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:23:50] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:23:53,020 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:23:53] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:23:55,482 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:23:55] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:28:54,619 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 16:28:59,627 - edge-server - INFO -   Sync service stopped
+2025-12-23 16:28:59,627 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 16:28:59,628 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 16:28:59,678 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 16:29:04,689 - edge-server - INFO -   Sync service stopped
+2025-12-23 16:29:04,690 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 16:29:04,691 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 16:29:18,144 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 16:29:18,145 - edge-server - INFO - ✅ Database initialized
+2025-12-23 16:29:18,145 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 16:29:18,146 - edge-server - INFO - ✅ Sync service started
+2025-12-23 16:29:18,146 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 16:29:18,184 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-12-23 16:29:18,184 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-23 16:29:18,185 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 16:29:18,436 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 16:29:18,437 - edge-server - INFO - ✅ Database initialized
+2025-12-23 16:29:18,438 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 16:29:18,438 - edge-server - INFO - ✅ Sync service started
+2025-12-23 16:29:18,438 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 16:29:18,466 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 16:29:18,469 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 16:29:52,417 - edge-server - INFO - Token validated for sale 44f25b47-a6ec-4d16-adaf-f91bcf8af09e, 300ml
+2025-12-23 16:29:52,418 - edge-server - INFO - Dispense started in background for sale 44f25b47-a6ec-4d16-adaf-f91bcf8af09e, 300ml
+2025-12-23 16:29:52,418 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:29:52] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 16:29:55,518 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:29:55] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:29:57,915 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:29:57] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:30:00,033 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:30:00] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:30:02,732 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:30:02] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:30:05,146 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:30:05] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:30:07,845 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:30:07] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:30:10,220 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 16:30:10] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 16:30:18,203 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\dispenser.py', reloading
+2025-12-23 16:30:18,204 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 16:30:23,218 - edge-server - INFO -   Sync service stopped
+2025-12-23 16:30:23,219 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 16:30:23,219 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 16:30:23,265 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 16:30:23,548 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 16:30:23,553 - edge-server - INFO - ✅ Database initialized
+2025-12-23 16:30:23,553 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 16:30:23,554 - edge-server - INFO - ✅ Sync service started
+2025-12-23 16:30:23,554 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 16:30:23,583 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 16:30:23,586 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 16:45:01,444 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\config.py', reloading
+2025-12-23 16:45:01,445 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 16:45:06,460 - edge-server - INFO -   Sync service stopped
+2025-12-23 16:45:06,461 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 16:45:06,462 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 16:45:06,535 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 16:45:06,935 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 16:45:06,936 - edge-server - INFO - ✅ Database initialized
+2025-12-23 16:45:06,936 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 16:45:06,937 - edge-server - INFO - ✅ Sync service started
+2025-12-23 16:45:06,937 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 16:45:06,971 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 16:45:06,975 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 16:45:30,321 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\payment_service.py', reloading
+2025-12-23 16:45:30,322 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 16:45:35,337 - edge-server - INFO -   Sync service stopped
+2025-12-23 16:45:35,338 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 16:45:35,338 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 16:45:35,374 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 16:45:35,643 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 16:45:35,644 - edge-server - INFO - ✅ Database initialized
+2025-12-23 16:45:35,644 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 16:45:35,645 - edge-server - INFO - ✅ Sync service started
+2025-12-23 16:45:35,645 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 16:45:35,678 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 16:45:35,682 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 16:45:39,735 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\app.py', reloading
+2025-12-23 16:45:39,735 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 16:45:44,741 - edge-server - INFO -   Sync service stopped
+2025-12-23 16:45:44,742 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 16:45:44,742 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 16:45:44,818 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 16:45:45,288 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 16:45:50,295 - edge-server - INFO -   Sync service stopped
+2025-12-23 16:45:50,296 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 16:45:50,297 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 17:04:41,063 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 17:04:41,065 - edge-server - INFO - ✅ Database initialized
+2025-12-23 17:04:41,065 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 17:04:41,065 - edge-server - INFO - ✅ Sync service started
+2025-12-23 17:04:41,066 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 17:04:41,113 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-12-23 17:04:41,113 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-23 17:04:41,114 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 17:04:41,401 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 17:04:41,402 - edge-server - INFO - ✅ Database initialized
+2025-12-23 17:04:41,402 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 17:04:41,403 - edge-server - INFO - ✅ Sync service started
+2025-12-23 17:04:41,403 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 17:04:41,433 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 17:04:41,453 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 17:07:33,864 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\app.py', reloading
+2025-12-23 17:07:33,880 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 17:07:38,882 - edge-server - INFO -   Sync service stopped
+2025-12-23 17:07:38,883 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 17:07:38,883 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 17:07:38,931 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 17:07:39,265 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 17:07:39,266 - edge-server - INFO - ✅ Database initialized
+2025-12-23 17:07:39,267 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 17:07:39,267 - edge-server - INFO - ✅ Sync service started
+2025-12-23 17:07:39,267 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 17:07:39,297 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 17:07:39,300 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 17:08:03,351 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 17:08:08,354 - edge-server - INFO -   Sync service stopped
+2025-12-23 17:08:08,354 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 17:08:08,354 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 17:08:08,389 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 17:08:13,390 - edge-server - INFO -   Sync service stopped
+2025-12-23 17:08:13,390 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 17:08:13,390 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 17:08:21,455 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 17:08:21,456 - edge-server - INFO - ✅ Database initialized
+2025-12-23 17:08:21,456 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 17:08:21,457 - edge-server - INFO - ✅ Sync service started
+2025-12-23 17:08:21,457 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 17:08:21,500 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-12-23 17:08:21,500 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-23 17:08:21,501 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 17:08:21,763 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 17:08:21,764 - edge-server - INFO - ✅ Database initialized
+2025-12-23 17:08:21,764 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 17:08:21,765 - edge-server - INFO - ✅ Sync service started
+2025-12-23 17:08:21,765 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 17:08:21,792 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 17:08:21,794 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 17:08:29,303 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:08:29] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:08:38,445 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:08:38] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:08:47,517 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:08:47] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:08:56,581 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:08:56] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:09:05,665 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:09:05] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:09:14,725 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:09:14] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:09:23,778 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:09:23] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:09:32,847 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:09:32] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:09:41,903 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:09:41] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:09:50,971 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:09:50] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:10:00,045 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:10:00] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:10:11,122 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:10:11] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:10:22,189 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:10:22] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:10:33,264 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:10:33] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:10:44,332 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:10:44] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:10:55,401 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:10:55] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:10:57,100 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 17:11:05,048 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 17:11:05,049 - edge-server - INFO - ✅ Database initialized
+2025-12-23 17:11:05,049 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 17:11:05,050 - edge-server - INFO - ✅ Sync service started
+2025-12-23 17:11:05,050 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 17:11:05,083 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-12-23 17:11:05,084 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-23 17:11:05,084 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 17:11:05,377 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 17:11:05,377 - edge-server - INFO - ✅ Database initialized
+2025-12-23 17:11:05,378 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 17:11:05,378 - edge-server - INFO - ✅ Sync service started
+2025-12-23 17:11:05,378 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 17:11:05,405 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 17:11:05,408 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 17:11:12,884 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:11:12] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:11:21,962 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:11:21] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:11:31,030 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:11:31] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:11:40,087 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:11:40] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:11:49,153 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:11:49] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:11:58,221 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:11:58] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:12:07,293 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:12:07] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:12:16,357 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:12:16] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:12:25,412 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:12:25] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:12:34,463 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:12:34] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:12:43,502 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:12:43] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:12:52,596 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:12:52] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:13:01,659 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:13:01] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:13:10,696 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:13:10] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:13:19,732 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:13:19] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:13:28,780 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:13:28] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:13:37,840 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:13:37] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:13:46,915 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:13:46] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:13:55,980 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:13:55] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:14:05,024 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:14:05] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:14:14,091 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:14:14] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:14:23,163 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:14:23] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:14:32,216 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:14:32] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:14:43,285 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:14:43] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:14:56,395 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:14:56] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:15:09,477 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:15:09] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:15:22,567 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:15:22] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:15:35,635 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:15:35] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:15:48,694 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:15:48] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:16:01,744 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:16:01] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:16:14,811 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:16:14] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:16:27,883 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:16:27] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:16:40,978 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:16:40] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:16:47,117 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 17:16:52,128 - edge-server - INFO -   Sync service stopped
+2025-12-23 17:16:52,129 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 17:16:52,129 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 17:18:08,851 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 17:18:08,852 - edge-server - INFO - ✅ Database initialized
+2025-12-23 17:18:08,852 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 17:18:08,853 - edge-server - INFO - ✅ Sync service started
+2025-12-23 17:18:08,853 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 17:18:08,892 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-12-23 17:18:08,893 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-23 17:18:08,893 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 17:18:09,211 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 17:18:09,215 - edge-server - INFO - ✅ Database initialized
+2025-12-23 17:18:09,215 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 17:18:09,217 - edge-server - INFO - ✅ Sync service started
+2025-12-23 17:18:09,217 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 17:18:09,254 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 17:18:09,258 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 17:21:00,207 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 17:21:00,208 - edge-server - INFO - ✅ Database initialized
+2025-12-23 17:21:00,208 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 17:21:00,210 - edge-server - INFO - ✅ Sync service started
+2025-12-23 17:21:00,210 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 17:21:00,245 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-12-23 17:21:00,245 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-23 17:21:00,246 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 17:21:00,526 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 17:21:00,527 - edge-server - INFO - ✅ Database initialized
+2025-12-23 17:21:00,527 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 17:21:00,528 - edge-server - INFO - ✅ Sync service started
+2025-12-23 17:21:00,528 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 17:21:00,556 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 17:21:00,559 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 17:21:14,108 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:21:14] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:21:28,163 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:21:28] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:21:29,266 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 17:21:34,268 - edge-server - INFO -   Sync service stopped
+2025-12-23 17:21:34,268 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 17:21:34,268 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 17:21:34,310 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 17:21:34,326 - edge-server - INFO -   Sync service stopped
+2025-12-23 17:21:34,326 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 17:21:34,327 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 17:21:42,235 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:21:42] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:21:56,267 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 17:21:56] "[33mGET /health HTTP/1.1[0m" 404 -
+2025-12-23 17:53:41,397 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 17:53:46,413 - edge-server - INFO -   Sync service stopped
+2025-12-23 17:53:46,415 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 17:53:46,416 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 17:53:46,486 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 17:53:51,488 - edge-server - INFO -   Sync service stopped
+2025-12-23 17:53:51,490 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 17:53:51,490 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 17:53:52,980 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 17:53:52,995 - edge-server - INFO - ✅ Database initialized
+2025-12-23 17:53:52,995 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 17:53:52,996 - edge-server - INFO - ✅ Sync service started
+2025-12-23 17:53:52,996 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 17:53:53,044 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-12-23 17:53:53,044 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-23 17:53:53,045 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 17:53:53,374 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 17:53:53,379 - edge-server - INFO - ✅ Database initialized
+2025-12-23 17:53:53,379 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 17:53:53,380 - edge-server - INFO - ✅ Sync service started
+2025-12-23 17:53:53,380 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 17:53:53,412 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 17:53:53,416 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 18:16:33,038 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:16:33] "OPTIONS /edge/payments/start HTTP/1.1" 200 -
+2025-12-23 18:16:33,316 - payment_service - INFO - 💳 Creating CREDIT payment: 18 BRL x 1x, ref=TXN_1766524592705_1kco5mhda
+2025-12-23 18:16:34,027 - payment_service - ERROR - ❌ Credit payment creation failed: At least one policy returned UNAUTHORIZED.
+2025-12-23 18:16:34,028 - edge-server - WARNING - Payment creation failed: At least one policy returned UNAUTHORIZED.
+2025-12-23 18:16:34,030 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:16:34] "[31m[1mPOST /edge/payments/start HTTP/1.1[0m" 400 -
+2025-12-23 18:17:35,718 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\config.py', reloading
+2025-12-23 18:17:35,719 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 18:17:40,732 - edge-server - INFO -   Sync service stopped
+2025-12-23 18:17:40,734 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 18:17:40,734 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 18:17:40,852 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 18:17:41,285 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 18:17:41,286 - edge-server - INFO - ✅ Database initialized
+2025-12-23 18:17:41,286 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 18:17:41,287 - edge-server - INFO - ✅ Sync service started
+2025-12-23 18:17:41,288 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 18:17:41,320 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 18:17:41,323 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 18:17:51,819 - payment_service - INFO - 🎭 MOCK PIX payment: 12 BRL, id=1766524671819
+2025-12-23 18:17:51,819 - edge-server - INFO - ✅ Payment started: 1766524671819 (PIX)
+2025-12-23 18:17:51,820 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:17:51] "POST /edge/payments/start HTTP/1.1" 200 -
+2025-12-23 18:17:52,080 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:17:52,081 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:17:52] "GET /edge/payments/status/1766524671819 HTTP/1.1" 200 -
+2025-12-23 18:17:53,100 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:17:53,101 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:17:53] "GET /edge/payments/status/1766524671819 HTTP/1.1" 200 -
+2025-12-23 18:17:54,428 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:17:54,429 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:17:54] "GET /edge/payments/status/1766524671819 HTTP/1.1" 200 -
+2025-12-23 18:17:55,446 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:17:55,448 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:17:55] "GET /edge/payments/status/1766524671819 HTTP/1.1" 200 -
+2025-12-23 18:17:56,774 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:17:56,775 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:17:56] "GET /edge/payments/status/1766524671819 HTTP/1.1" 200 -
+2025-12-23 18:17:57,794 - payment_service - INFO - 🎭 MOCK payment status: approved
+2025-12-23 18:17:57,796 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:17:57] "GET /edge/payments/status/1766524671819 HTTP/1.1" 200 -
+2025-12-23 18:17:58,552 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:17:58] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 18:17:58,812 - edge-server - INFO - Token validated for sale b94ff6bb-e224-4b42-97d4-9e4bd19d575b, 200ml
+2025-12-23 18:17:58,813 - edge-server - INFO - Dispense started in background for sale b94ff6bb-e224-4b42-97d4-9e4bd19d575b, 200ml
+2025-12-23 18:17:58,813 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:17:58] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 18:17:59,892 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:17:59] "OPTIONS /edge/status HTTP/1.1" 200 -
+2025-12-23 18:18:02,320 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:18:02] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:18:04,684 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:18:04] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:18:07,630 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:18:07] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:18:10,331 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:18:10] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:18:13,621 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:18:13] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:19:01,430 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\config.py', reloading
+2025-12-23 18:19:01,431 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 18:19:06,443 - edge-server - INFO -   Sync service stopped
+2025-12-23 18:19:06,443 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 18:19:06,443 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 18:19:06,494 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 18:19:06,778 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 18:19:06,779 - edge-server - INFO - ✅ Database initialized
+2025-12-23 18:19:06,779 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 18:19:06,780 - edge-server - INFO - ✅ Sync service started
+2025-12-23 18:19:06,780 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 18:19:06,809 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 18:19:06,812 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 18:20:02,217 - payment_service - INFO - 🎭 MOCK PIX payment: 12 BRL, id=1766524802217
+2025-12-23 18:20:02,217 - edge-server - INFO - ✅ Payment started: 1766524802217 (PIX)
+2025-12-23 18:20:02,218 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:20:02] "POST /edge/payments/start HTTP/1.1" 200 -
+2025-12-23 18:20:02,453 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:20:02,454 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:20:02] "GET /edge/payments/status/1766524802217 HTTP/1.1" 200 -
+2025-12-23 18:20:03,473 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:20:03,474 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:20:03] "GET /edge/payments/status/1766524802217 HTTP/1.1" 200 -
+2025-12-23 18:20:04,805 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:20:04,805 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:20:04] "GET /edge/payments/status/1766524802217 HTTP/1.1" 200 -
+2025-12-23 18:20:05,817 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:20:05,817 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:20:05] "GET /edge/payments/status/1766524802217 HTTP/1.1" 200 -
+2025-12-23 18:20:07,140 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:20:07,141 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:20:07] "GET /edge/payments/status/1766524802217 HTTP/1.1" 200 -
+2025-12-23 18:20:08,157 - payment_service - INFO - 🎭 MOCK payment status: approved
+2025-12-23 18:20:08,158 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:20:08] "GET /edge/payments/status/1766524802217 HTTP/1.1" 200 -
+2025-12-23 18:20:08,890 - edge-server - INFO - Token validated for sale 29708542-efbe-4c74-a725-9fb2c1d3a113, 200ml
+2025-12-23 18:20:08,892 - edge-server - INFO - Dispense started in background for sale 29708542-efbe-4c74-a725-9fb2c1d3a113, 200ml
+2025-12-23 18:20:08,893 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:20:08] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 18:20:11,995 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:20:11] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:20:14,437 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:20:14] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:20:16,839 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:20:16] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:20:19,515 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:20:19] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:20:21,903 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:20:21] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:23:53,388 - payment_service - INFO - 🎭 MOCK PIX payment: 8 BRL, id=1766525033388
+2025-12-23 18:23:53,389 - edge-server - INFO - ✅ Payment started: 1766525033388 (PIX)
+2025-12-23 18:23:53,390 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:23:53] "POST /edge/payments/start HTTP/1.1" 200 -
+2025-12-23 18:23:53,639 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:23:53,640 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:23:53] "GET /edge/payments/status/1766525033388 HTTP/1.1" 200 -
+2025-12-23 18:23:54,672 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:23:54,674 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:23:54] "GET /edge/payments/status/1766525033388 HTTP/1.1" 200 -
+2025-12-23 18:23:56,027 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:23:56,027 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:23:56] "GET /edge/payments/status/1766525033388 HTTP/1.1" 200 -
+2025-12-23 18:23:57,055 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:23:57,055 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:23:57] "GET /edge/payments/status/1766525033388 HTTP/1.1" 200 -
+2025-12-23 18:23:58,396 - payment_service - INFO - 🎭 MOCK payment status: approved
+2025-12-23 18:23:58,397 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:23:58] "GET /edge/payments/status/1766525033388 HTTP/1.1" 200 -
+2025-12-23 18:23:58,667 - edge-server - INFO - Token validated for sale 44a222af-fd26-4892-9c2d-467135277db7, 200ml
+2025-12-23 18:23:58,668 - edge-server - INFO - Dispense started in background for sale 44a222af-fd26-4892-9c2d-467135277db7, 200ml
+2025-12-23 18:23:58,669 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:23:58] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 18:24:01,788 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:24:01] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:24:04,166 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:24:04] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:24:06,303 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:24:06] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:24:09,000 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:24:09] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:24:11,397 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:24:11] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:26:49,049 - payment_service - INFO - 🎭 MOCK PIX payment: 12 BRL, id=1766525209049
+2025-12-23 18:26:49,050 - edge-server - INFO - ✅ Payment started: 1766525209049 (PIX)
+2025-12-23 18:26:49,051 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:26:49] "POST /edge/payments/start HTTP/1.1" 200 -
+2025-12-23 18:26:49,280 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:26:49,281 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:26:49] "GET /edge/payments/status/1766525209049 HTTP/1.1" 200 -
+2025-12-23 18:26:50,297 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:26:50,298 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:26:50] "GET /edge/payments/status/1766525209049 HTTP/1.1" 200 -
+2025-12-23 18:26:51,618 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:26:51,618 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:26:51] "GET /edge/payments/status/1766525209049 HTTP/1.1" 200 -
+2025-12-23 18:26:53,268 - payment_service - INFO - 🎭 MOCK payment status: pending
+2025-12-23 18:26:53,269 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:26:53] "GET /edge/payments/status/1766525209049 HTTP/1.1" 200 -
+2025-12-23 18:26:55,221 - payment_service - INFO - 🎭 MOCK payment status: approved
+2025-12-23 18:26:55,221 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:26:55] "GET /edge/payments/status/1766525209049 HTTP/1.1" 200 -
+2025-12-23 18:26:55,480 - edge-server - INFO - Token validated for sale 1ec5fa43-b9e0-422f-af6d-38955f0bd157, 200ml
+2025-12-23 18:26:55,480 - edge-server - INFO - Dispense started in background for sale 1ec5fa43-b9e0-422f-af6d-38955f0bd157, 200ml
+2025-12-23 18:26:55,480 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:26:55] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 18:26:58,604 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:26:58] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:27:00,996 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:27:00] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:27:03,089 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:27:03] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:27:05,502 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:27:05] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 18:27:08,317 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 18:27:08] "GET /edge/status HTTP/1.1" 200 -

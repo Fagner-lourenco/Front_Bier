@@ -5,7 +5,7 @@
 
 // Configuração global do app
 window.APP = {
-  debug: true,
+  debug: false,
   version: '1.1.0',
   machineId: 'M001'
 };
@@ -39,16 +39,23 @@ async function initApp() {
     AppConfig = await configResponse.json();
     window.APP.config = AppConfig;
     window.APP.basePath = basePath;
+    // Usa flag de debug do config (fallback para true padrão)
+    window.APP.debug = AppConfig.debug !== undefined ? !!AppConfig.debug : window.APP.debug;
+    // Ativa hook de console apenas se debug habilitado
+    setupDebugConsoleHook();
     console.log('  ✓ Config carregado:', AppConfig);
 
     // 2. Inicializa módulos
     console.log('[3/10] Inicializando MockAPIs...');
     try {
-      MockAPIs.init();
-      console.log('  ✓ MockAPIs OK');
+      if (AppConfig.api && AppConfig.api.use_mock && typeof MockAPIs !== 'undefined') {
+        MockAPIs.init();
+        console.log('  ✓ MockAPIs OK');
+      } else {
+        console.log('  ✓ MockAPIs desativado');
+      }
     } catch (e) {
-      console.error('  ✗ Erro MockAPIs:', e);
-      throw e;
+      console.warn('  ⚠️ MockAPIs não disponível, seguindo sem mock');
     }
 
     console.log('[4/10] Inicializando API...');
@@ -60,7 +67,23 @@ async function initApp() {
       throw e;
     }
 
-    console.log('[5/10] Inicializando Polling...');
+    console.log('[5/10] Inicializando PaymentSDK...');
+    try {
+      // Garante referência no window (const não se auto-anexa no browser)
+      if (!window.PaymentSDK && typeof PaymentSDK !== 'undefined') {
+        window.PaymentSDK = PaymentSDK;
+      }
+      const sdk = window.PaymentSDK;
+      if (!sdk) throw new Error('PaymentSDK não disponível no window');
+
+      sdk.init(AppConfig.payment_sdk);
+      console.log('  ✓ PaymentSDK OK');
+    } catch (e) {
+      console.error('  ✗ Erro PaymentSDK:', e);
+      throw e;
+    }
+
+    console.log('[6/10] Inicializando Polling...');
     try {
       Polling.init(AppConfig);
       console.log('  ✓ Polling OK');
@@ -69,7 +92,7 @@ async function initApp() {
       throw e;
     }
 
-    console.log('[6/10] Inicializando UI...');
+    console.log('[7/10] Inicializando UI...');
     try {
       UI.init(AppConfig);
       console.log('  ✓ UI OK');
@@ -79,19 +102,19 @@ async function initApp() {
     }
 
     // 3. Cria state machine
-    console.log('[7/10] Criando StateMachine...');
+    console.log('[8/10] Criando StateMachine...');
     StateMachineInstance = new StateMachine(AppConfig);
     window.StateMachineInstance = StateMachineInstance;
     console.log('  ✓ StateMachine criada');
 
     // 4. Registra listeners
-    console.log('[8/10] Registrando listeners...');
+    console.log('[9/10] Registrando listeners...');
     registerStateListeners();
     registerEventListeners();
     console.log('  ✓ Listeners registrados');
 
     // 5. Carrega dados iniciais
-    console.log('[9/10] Carregando dados iniciais...');
+    console.log('[10/10] Carregando dados iniciais...');
     await loadInitialData();
     console.log('  ✓ Dados carregados');
 
@@ -99,7 +122,7 @@ async function initApp() {
     await checkPendingTransactions();
 
     // 7. Inicia em BOOT
-    console.log('[10/10] Iniciando em BOOT...');
+    console.log('[11/11] Iniciando em BOOT...');
     StateMachineInstance.setState('BOOT');
     UI.render('BOOT');
 
@@ -219,14 +242,6 @@ function registerStateListeners() {
   // Escuta o evento emitido pela StateMachine
   StateMachineInstance.on('state:change', async (event) => {
     console.log('[App] State mudou:', event.from, '→', event.to);
-
-    // Renderiza tela
-    const data = {
-      ...event.data,
-      beverages: window.APP.beverages
-    };
-
-    UI.render(event.to, data);
   });
 }
 
@@ -319,15 +334,8 @@ async function reportConsumeToSaaS(stateData, status) {
     
     if (result.ok) {
       console.log('[App] Consumo reportado com sucesso');
-      Storage.saveTransaction({
-        token: token,
-        ml_served: mlServed,
-        ml_authorized: mlAuthorized,
-        sale_id: saleId,
-        beverage: stateData.beverage,
-        finishedAt: finishedAt,
-        synced: true
-      });
+      // Remove transação do storage para evitar acúmulo e reenvio desnecessário
+      Storage.remove('last_transaction');
       // Limpa sale_id após consumo registrado
       window.APP.lastSaleId = null;
     } else {
@@ -472,17 +480,22 @@ async function handlePaymentSelect(paymentMethod) {
 }
 
 /**
- * Processa pagamento com SDK da maquininha
+ * Processa pagamento com SDK Mercado Pago via EDGE
  */
 async function processPaymentWithSDK(beverage, volumeMl, paymentMethod, total) {
   try {
-    // Inicializa SDK se necessário
-    if (!window.PaymentSDK.provider) {
-      window.PaymentSDK.init(AppConfig.payment_sdk || { provider: 'mock' });
+    const sdk = window.PaymentSDK;
+    if (!sdk) {
+      throw new Error('PaymentSDK não inicializado');
+    }
+
+    // Re-inicializa se config ausente (proteção contra race de carregamento)
+    if (!sdk.config || !sdk.config.edge_payments_url) {
+      sdk.init(AppConfig.payment_sdk || {});
     }
     
     // Configura callback de status
-    window.PaymentSDK.onStatusChange = (status, data) => {
+    sdk.onStatusChange = (status, data) => {
       console.log('[Payment] Status:', status, data);
       
       // Atualiza UI se estivermos em AWAITING_PAYMENT
@@ -491,11 +504,12 @@ async function processPaymentWithSDK(beverage, volumeMl, paymentMethod, total) {
       }
     };
 
-    // Inicia transação (valor em centavos)
-    const result = await window.PaymentSDK.startTransaction({
-      amount: Math.round(total * 100),
+    // Inicia transação com Mercado Pago via EDGE (valor em BRL)
+    const result = await sdk.startTransaction({
+      amount: total,
       paymentType: paymentMethod.toUpperCase(),
-      installments: 1
+      volume_ml: volumeMl,
+      beverage_id: beverage.id
     });
 
     console.log('[Payment] Resultado:', result);
@@ -675,26 +689,9 @@ async function computeHmacSha256(message, secret) {
     // Retorna em base64 URL-safe
     return arrayBufferToBase64Url(signature);
   } catch (error) {
-    console.warn('[HMAC] Web Crypto falhou, usando fallback:', error);
-    // Fallback para ambientes sem crypto.subtle (não deve acontecer em browsers modernos)
-    return computeHmacSha256Fallback(message, secret);
+    console.error('[HMAC] Web Crypto não disponível ou falhou:', error);
+    throw new Error('HMAC-SHA256 não suportado neste navegador. Use um browser moderno com Web Crypto.');
   }
-}
-
-/**
- * Fallback HMAC simples (apenas para debug, NÃO usar em produção!)
- */
-function computeHmacSha256Fallback(message, secret) {
-  let hash = 0;
-  const combined = message + secret;
-  for (let i = 0; i < combined.length; i++) {
-    const char = combined.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash;
-  }
-  const hex = Math.abs(hash).toString(16).padStart(16, '0');
-  const fakeHmac = hex + hex + hex + hex;
-  return base64UrlEncode(fakeHmac);
 }
 
 /**
@@ -736,15 +733,6 @@ async function registerSaleInSaaS(beverage, volumeMl, total, paymentMethod, sdkR
   window.APP.lastSaleId = saleId;
   
   return saleId;
-}
-
-/**
- * Processa pagamento com backend (LEGADO - mantido para compatibilidade)
- */
-async function processPayment(beverage, volumeMl, paymentMethod) {
-  // Redireciona para novo fluxo com SDK
-  const total = Validators.calculatePrice(volumeMl, beverage.price_per_ml);
-  await processPaymentWithSDK(beverage, volumeMl, paymentMethod, total);
 }
 
 /**
@@ -816,7 +804,7 @@ async function cancelPayment() {
   
   // Cancela transação no SDK
   if (window.PaymentSDK && window.PaymentSDK.currentTransaction) {
-    await window.PaymentSDK.cancelTransaction();
+    await window.PaymentSDK.cancelPayment();
   }
   
   // Volta para IDLE
@@ -862,18 +850,17 @@ function debugLog(level, message, data = '') {
   }
 }
 
-/**
- * Override console.log para debug panel
- */
-/**
- * Override console.log para debug panel (apenas se debug ativo)
- */
-if (window.APP && window.APP.debug) {
+// Configura override de console apenas quando debug estiver ativo
+function setupDebugConsoleHook() {
+  if (!window.APP || !window.APP.debug) return;
+  if (window.APP.consoleHooked) return;
+
   const originalLog = console.log;
   const originalError = console.error;
 
   window.console.log = function(...args) {
     originalLog.apply(console, args);
+    if (!window.APP || !window.APP.debug) return;
     try {
       const message = args.map(a => typeof a === 'string' ? a : JSON.stringify(a)).join(' ');
       debugLog('info', message);
@@ -884,6 +871,7 @@ if (window.APP && window.APP.debug) {
 
   window.console.error = function(...args) {
     originalError.apply(console, args);
+    if (!window.APP || !window.APP.debug) return;
     try {
       const message = args.map(a => typeof a === 'string' ? a : JSON.stringify(a)).join(' ');
       debugLog('error', message);
@@ -891,6 +879,8 @@ if (window.APP && window.APP.debug) {
       // Ignora erros de serialização
     }
   };
+
+  window.APP.consoleHooked = true;
 }
 
 /**

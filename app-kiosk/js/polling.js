@@ -9,13 +9,14 @@ const Polling = {
   intervalMs: 300,
   config: null,
   isFetching: false, // Flag anti-race condition
+  errorCount: 0,
 
   /**
    * Inicializa polling
    */
   init(config) {
     this.config = config;
-    this.intervalMs = config.ui.polling_ms;
+    this.intervalMs = config.ui?.polling_ms || this.intervalMs;
     this.log('Polling inicializado com intervalo de', this.intervalMs, 'ms');
   },
 
@@ -72,8 +73,15 @@ const Polling = {
       this.log('fetchStatus já em andamento, ignorando');
       return;
     }
+
+    // Se não estamos em DISPENSING, não precisa continuar polling
+    if (!window.StateMachineInstance || window.StateMachineInstance.getState() !== 'DISPENSING') {
+      this.stop();
+      return;
+    }
     
     this.isFetching = true;
+    this.errorCount = 0; // reset a cada ciclo iniciado
     
     try {
       let result;
@@ -104,12 +112,17 @@ const Polling = {
       
       this.emitStatus(status);
 
+      // Reset erro se sucesso
+      this.errorCount = 0;
+
       // Se a dispensa foi completada/erro, para o polling e transiciona
       const dispenserData = status.dispenser || status;
       const dispenserStatus = (dispenserData.status || status.state || '').toString().toUpperCase();
       
       if (dispenserStatus === 'COMPLETED' || dispenserStatus === 'FINISHED') {
-        this.log(`✅ Dispensing ${dispenserStatus}! Volume: ${dispenserData.volume_dispensed_ml || dispenserData.ml_served}ml`);
+        const stateData = (window.StateMachineInstance && window.StateMachineInstance.getData()) || {};
+        const volFinal = dispenserData.volume_dispensed_ml ?? dispenserData.ml_served ?? stateData.ml_served ?? 0;
+        this.log(`✅ Dispensing ${dispenserStatus}! Volume: ${volFinal}ml`);
         this.stop();
         
         // NÃO transiciona aqui - o main.js vai fazer isso ao processar o evento 'dispensingStatus'
@@ -126,6 +139,12 @@ const Polling = {
     } catch (error) {
       this.log('ERRO no fetchStatus:', error.message);
       this.emitError(error.message);
+      this.errorCount += 1;
+      // Para evitar flood, interrompe após 3 erros seguidos
+      if (this.errorCount >= 3) {
+        this.log('Parando polling após erros consecutivos');
+        this.stop();
+      }
     } finally {
       this.isFetching = false;
     }

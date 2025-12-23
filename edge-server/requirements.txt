@@ -20,3 +20,5 @@ requests>=2.31.0
 
 # Optional: Production WSGI server
 # gunicorn>=21.2.0
+# Mercado Pago Payment Integration
+mercadopago>=2.0.0

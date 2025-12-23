@@ -187,30 +187,36 @@ class Dispenser:
                 # Simular tempo de dispensa: 20ml/s (mais lento para polling conseguir ler o progresso)
                 simulated_duration = (payload.volume_ml / 20.0)  # 20ml por segundo
                 simulated_duration = max(5.0, min(simulated_duration, 30.0))  # Entre 5-30 segundos
-                
-                steps = 10  # Dividir em 10 passos para feedback
-                step_duration = simulated_duration / steps
-                
-                for step in range(steps):
+
+                # Progresso por 1ml para sensação contínua
+                total_ml = int(payload.volume_ml)
+                step_duration = simulated_duration / max(total_ml, 1)
+
+                last_percent_printed = -1
+                for ml in range(1, total_ml + 1):
                     if self._cancel_requested:
                         print("⚠️ Dispense cancelled by user")
                         final_status = DispenseStatus.INTERRUPTED
                         error_message = "Cancelled by user"
                         break
-                    
+
                     time.sleep(step_duration)
-                    
+
                     # Atualizar progresso simulado (sem mexer no GPIO)
-                    simulated_ml = (payload.volume_ml * (step + 1)) / steps
-                    simulated_ml = min(simulated_ml, payload.volume_ml)  # Limitar ao máximo
+                    simulated_ml = float(ml)
                     percent = min(100, (simulated_ml / payload.volume_ml) * 100)
-                    
+
                     with self._lock:
                         self._mock_volume_ml = simulated_ml
-                    
+
                     if self._progress_callback:
                         self._progress_callback(simulated_ml, percent)
-                    print(f"  → {percent:.0f}% ({simulated_ml:.0f}ml / {payload.volume_ml}ml)")
+
+                    # Logar apenas quando o percentual inteiro aumenta para evitar spam
+                    percent_int = int(percent)
+                    if percent_int != last_percent_printed:
+                        print(f"  → {percent_int}% ({simulated_ml:.0f}ml / {payload.volume_ml}ml)")
+                        last_percent_printed = percent_int
                 
                 if final_status == DispenseStatus.COMPLETED:
                     print(f"✅ Mock dispensing complete: {payload.volume_ml}ml")

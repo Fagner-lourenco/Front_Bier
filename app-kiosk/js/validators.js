@@ -27,20 +27,6 @@ const Validators = {
   },
 
   /**
-   * Valida se um número é positivo
-   */
-  isPositiveNumber(num) {
-    return typeof num === 'number' && num > 0;
-  },
-
-  /**
-   * Valida se uma data é válida
-   */
-  isValidDate(date) {
-    return date instanceof Date && !isNaN(date.getTime());
-  },
-
-  /**
    * Formata moeda brasileira
    */
   formatCurrency(value) {
@@ -87,14 +73,6 @@ const Validators = {
     const timestamp = Date.now().toString(36);
     const randomStr = Math.random().toString(36).substr(2, 9);
     return prefix ? `${prefix}_${timestamp}${randomStr}` : `${timestamp}${randomStr}`;
-  },
-
-  /**
-   * Calcula percentual de progresso
-   */
-  calculatePercentage(current, total) {
-    if (total === 0) return 0;
-    return Math.min(Math.round((current / total) * 100), 100);
   }
 };
 
