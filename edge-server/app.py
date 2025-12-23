@@ -68,12 +68,13 @@ def health():
 @app.route('/edge/status', methods=['GET'])
 def status():
     """Detailed status including dispenser, sync, and GPIO"""
+    from datetime import datetime, timezone
     return jsonify({
         "dispenser": dispenser.get_status(),
         "sync": sync_service.get_status(),
         "gpio": gpio_controller.get_status(),
         "database": database.get_consumption_stats(),
-        "timestamp": datetime.utcnow().isoformat() + "Z"
+        "timestamp": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
     })
 
 
@@ -137,14 +138,22 @@ def authorize():
                 "error": "Dispenser is busy"
             }), 409
         
-        # Execute dispense (blocking operation)
-        result = dispenser.dispense(payload)
+        # Execute dispense in background thread (non-blocking)
+        # This allows polling to read progress while dispensing is happening
+        import threading
+        dispense_thread = threading.Thread(target=dispenser.dispense, args=(payload,), daemon=True)
+        dispense_thread.start()
         
-        logger.info(f"Dispense complete: {result.volume_dispensed_ml:.1f}ml, success={result.success}")
+        logger.info(f"Dispense started in background for sale {payload.sale_id}, {payload.volume_ml}ml")
         
         return jsonify({
             "authorized": True,
-            "result": result.to_dict()
+            "result": {
+                "status": "dispensing",
+                "sale_id": payload.sale_id,
+                "volume_authorized_ml": payload.volume_ml,
+                "message": "Dispensing in progress..."
+            }
         })
         
     except Exception as e:

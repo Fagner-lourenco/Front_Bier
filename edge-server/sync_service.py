@@ -119,7 +119,10 @@ class SyncService:
                     error_message=f"HTTP {response.status_code}: {response.text[:200]}",
                     response_code=response.status_code
                 )
-                print(f"❌ Sync failed: {record.id} - HTTP {response.status_code}")
+                if response.status_code == 404:
+                    print(f"⚠️ Sync failed: {record.id} - HTTP {response.status_code} (Machine/Sale not found in SaaS - expected in MVP)")
+                else:
+                    print(f"❌ Sync failed: {record.id} - HTTP {response.status_code}")
                 return False
                 
         except requests.exceptions.Timeout:

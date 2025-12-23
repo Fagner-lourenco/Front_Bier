@@ -695,39 +695,49 @@ const UI = {
       return;
     }
 
+    // Extrai dados da estrutura do EDGE
+    const dispenserData = status.dispenser || {};
+    const stateData = window.StateMachineInstance.getData() || {};
+    const volumeAuthorized = stateData.volume || 500;
+    
+    const ml_served = dispenserData.volume_dispensed_ml || 0;
+    const percentage = volumeAuthorized > 0 
+      ? Math.round((ml_served / volumeAuthorized) * 100)
+      : 0;
+
     const barra = document.getElementById('dispensing-barra');
     const mlServed = document.getElementById('ml-served');
     const percentageSpan = document.getElementById('dispensing-percentage');
     const statusText = document.querySelector('.status-text');
 
     if (barra) {
-      barra.style.width = status.percentage + '%';
+      barra.style.width = Math.min(percentage, 100) + '%';
     }
     
     if (mlServed) {
-      mlServed.textContent = status.ml_served;
+      mlServed.textContent = Math.round(ml_served);
     }
     
     if (percentageSpan) {
-      percentageSpan.textContent = status.percentage;
+      percentageSpan.textContent = Math.min(percentage, 100);
     }
 
     // Atualiza mensagem de status baseado no progresso
     if (statusText) {
-      if (status.percentage < 25) {
+      if (percentage < 25) {
         statusText.innerHTML = '<span class="status-icon">🔄</span> Iniciando extração...';
-      } else if (status.percentage < 50) {
+      } else if (percentage < 50) {
         statusText.innerHTML = '<span class="status-icon">💧</span> Servindo bebida...';
-      } else if (status.percentage < 75) {
+      } else if (percentage < 75) {
         statusText.innerHTML = '<span class="status-icon">✨</span> Quase lá...';
-      } else if (status.percentage < 100) {
+      } else if (percentage < 100) {
         statusText.innerHTML = '<span class="status-icon">🎯</span> Finalizando...';
       } else {
         statusText.innerHTML = '<span class="status-icon">✅</span> Concluído!';
       }
     }
 
-    this.log('Progress atualizado:', status.percentage + '%', status.ml_served + 'ml');
+    this.log('Progress atualizado:', percentage + '%', Math.round(ml_served) + 'ml');
   },
 
   /**

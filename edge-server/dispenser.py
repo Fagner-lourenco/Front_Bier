@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from enum import Enum
 
 from config import config
-from gpio_controller import gpio_controller, FlowReading
+from gpio_controller import gpio_controller, FlowReading, MOCK_GPIO
 from database import database, ConsumptionRecord
 from token_validator import TokenPayload
 
@@ -75,6 +75,11 @@ class Dispenser:
         self.min_flow_rate = config.gpio.MIN_FLOW_RATE
         self.flow_check_interval = 0.5  # Check flow every 0.5s
         self.empty_keg_timeout = 3.0  # Seconds without flow before declaring empty
+        
+        # MOCK mode simulation data (para não interferir com GPIO real)
+        self._mock_volume_ml = 0.0
+        self._mock_start_time = None
+        self._mock_target_ml = 0.0
     
     def set_progress_callback(self, callback: Callable[[float, float], None]):
         """
@@ -92,7 +97,16 @@ class Dispenser:
                 "current_sale_id": self.current_payload.sale_id if self.current_payload else None
             }
             
-            if self.status == DispenseStatus.DISPENSING:
+            # Em modo MOCK durante dispensa ou logo após, usar dados simulados
+            if MOCK_GPIO and (self.status == DispenseStatus.DISPENSING or (self._mock_start_time and time.time() - self._mock_start_time < 10)):
+                # Usar dados simulados limpos
+                result.update({
+                    "volume_dispensed_ml": round(self._mock_volume_ml, 1),
+                    "duration_seconds": round(time.time() - self._mock_start_time, 2) if self._mock_start_time else 0.0,
+                    "flow_rate_ml_s": 20.0  # Simulação de 20ml/s
+                })
+            else:
+                # Usar dados reais do GPIO
                 reading = gpio_controller.get_flow_reading()
                 result.update({
                     "volume_dispensed_ml": round(reading.volume_ml, 1),
@@ -146,8 +160,10 @@ class Dispenser:
             # Initialize GPIO
             gpio_controller.initialize()
             
-            # Reset counters
+            # Reset counters - CRUCIAL para não acumular de dispensas anteriores
+            print(f"🔄 Resetting GPIO counters (pulse_count before: {gpio_controller.get_pulse_count()})")
             gpio_controller.reset_pulse_count()
+            print(f"🔄 Reset complete (pulse_count after: {gpio_controller.get_pulse_count()})")
             
             # Start pump
             with self._lock:
@@ -158,53 +174,93 @@ class Dispenser:
             
             print(f"🍺 Dispensing {payload.volume_ml}ml for sale {payload.sale_id}")
             
-            # Dispensing loop
-            target_ml = payload.volume_ml
-            last_flow_time = time.time()
-            last_pulse_count = 0
-            dispense_start = time.time()
-            
-            while True:
-                time.sleep(self.flow_check_interval)
+            # Em modo MOCK, simular dispensa rápida (sem depender de GPIO real)
+            if MOCK_GPIO:
+                print(f"📌 MOCK MODE: Simulating dispensing for {payload.volume_ml}ml...")
+                # Resetar dados simulados
+                with self._lock:
+                    self._mock_volume_ml = 0.0
+                    self._mock_start_time = time.time()
+                    self._mock_target_ml = payload.volume_ml
                 
-                reading = gpio_controller.get_flow_reading()
-                current_ml = reading.volume_ml
-                elapsed = time.time() - dispense_start
+                # Simular tempo de dispensa: 20ml/s (mais lento para polling conseguir ler o progresso)
+                simulated_duration = (payload.volume_ml / 20.0)  # 20ml por segundo
+                simulated_duration = max(5.0, min(simulated_duration, 30.0))  # Entre 5-30 segundos
                 
-                # Progress callback
-                if self._progress_callback:
-                    percent = min(100, (current_ml / target_ml) * 100)
-                    self._progress_callback(current_ml, percent)
+                steps = 10  # Dividir em 10 passos para feedback
+                step_duration = simulated_duration / steps
                 
-                # Check if target reached
-                if current_ml >= target_ml:
-                    print(f"✅ Target volume reached: {current_ml:.1f}ml")
-                    break
+                for step in range(steps):
+                    if self._cancel_requested:
+                        print("⚠️ Dispense cancelled by user")
+                        final_status = DispenseStatus.INTERRUPTED
+                        error_message = "Cancelled by user"
+                        break
+                    
+                    time.sleep(step_duration)
+                    
+                    # Atualizar progresso simulado (sem mexer no GPIO)
+                    simulated_ml = (payload.volume_ml * (step + 1)) / steps
+                    simulated_ml = min(simulated_ml, payload.volume_ml)  # Limitar ao máximo
+                    percent = min(100, (simulated_ml / payload.volume_ml) * 100)
+                    
+                    with self._lock:
+                        self._mock_volume_ml = simulated_ml
+                    
+                    if self._progress_callback:
+                        self._progress_callback(simulated_ml, percent)
+                    print(f"  → {percent:.0f}% ({simulated_ml:.0f}ml / {payload.volume_ml}ml)")
                 
-                # Check for cancellation
-                if self._cancel_requested:
-                    print("⚠️ Dispense cancelled by user")
-                    final_status = DispenseStatus.INTERRUPTED
-                    error_message = "Cancelled by user"
-                    break
+                if final_status == DispenseStatus.COMPLETED:
+                    print(f"✅ Mock dispensing complete: {payload.volume_ml}ml")
+            else:
+                # Hardware real: Dispensing loop com monitoramento de pulsos
+                target_ml = payload.volume_ml
+                last_flow_time = time.time()
+                last_pulse_count = 0
+                dispense_start = time.time()
                 
-                # Check timeout
-                if elapsed >= self.max_dispense_time:
-                    print(f"⚠️ Safety timeout after {elapsed:.1f}s")
-                    final_status = DispenseStatus.INTERRUPTED
-                    error_message = f"Safety timeout ({self.max_dispense_time}s)"
-                    break
-                
-                # Check flow rate (empty keg detection)
-                if reading.pulse_count > last_pulse_count:
-                    last_flow_time = time.time()
-                    last_pulse_count = reading.pulse_count
-                elif time.time() - last_flow_time > self.empty_keg_timeout:
-                    # No flow for too long
-                    print(f"⚠️ No flow detected - possible empty keg")
-                    final_status = DispenseStatus.INTERRUPTED
-                    error_message = "No flow detected - check keg"
-                    break
+                while True:
+                    time.sleep(self.flow_check_interval)
+                    
+                    reading = gpio_controller.get_flow_reading()
+                    current_ml = reading.volume_ml
+                    elapsed = time.time() - dispense_start
+                    
+                    # Progress callback
+                    if self._progress_callback:
+                        percent = min(100, (current_ml / target_ml) * 100)
+                        self._progress_callback(current_ml, percent)
+                    
+                    # Check if target reached
+                    if current_ml >= target_ml:
+                        print(f"✅ Target volume reached: {current_ml:.1f}ml")
+                        break
+                    
+                    # Check for cancellation
+                    if self._cancel_requested:
+                        print("⚠️ Dispense cancelled by user")
+                        final_status = DispenseStatus.INTERRUPTED
+                        error_message = "Cancelled by user"
+                        break
+                    
+                    # Check timeout
+                    if elapsed >= self.max_dispense_time:
+                        print(f"⚠️ Safety timeout after {elapsed:.1f}s")
+                        final_status = DispenseStatus.INTERRUPTED
+                        error_message = f"Safety timeout ({self.max_dispense_time}s)"
+                        break
+                    
+                    # Check flow rate (empty keg detection)
+                    if reading.pulse_count > last_pulse_count:
+                        last_flow_time = time.time()
+                        last_pulse_count = reading.pulse_count
+                    elif time.time() - last_flow_time > self.empty_keg_timeout:
+                        # No flow for too long
+                        print(f"⚠️ No flow detected - possible empty keg")
+                        final_status = DispenseStatus.INTERRUPTED
+                        error_message = "No flow detected - check keg"
+                        break
             
         except Exception as e:
             final_status = DispenseStatus.ERROR
@@ -217,7 +273,21 @@ class Dispenser:
         
         # Get final reading
         finished_at = datetime.utcnow()
-        final_reading = gpio_controller.get_flow_reading()
+        
+        # Em modo MOCK, usar dados simulados em vez de GPIO
+        if MOCK_GPIO:
+            # Simular leitura final baseada nos dados simulados
+            final_volume_ml = self._mock_volume_ml if final_status == DispenseStatus.COMPLETED else self._mock_volume_ml
+            final_duration = time.time() - self._mock_start_time if self._mock_start_time else 0
+            final_pulse_count = int(final_volume_ml * (400 / 1000))  # Simular pulsos equivalentes
+            final_flow_rate = final_volume_ml / final_duration if final_duration > 0 else 0
+        else:
+            # Hardware real
+            final_reading = gpio_controller.get_flow_reading()
+            final_volume_ml = final_reading.volume_ml
+            final_duration = final_reading.duration_seconds
+            final_pulse_count = final_reading.pulse_count
+            final_flow_rate = final_reading.flow_rate_ml_s
         
         # Save to local database
         try:
@@ -227,11 +297,11 @@ class Dispenser:
                 beverage_id=payload.beverage_id,
                 tap_id=payload.tap_id,
                 volume_authorized_ml=payload.volume_ml,
-                volume_dispensed_ml=final_reading.volume_ml,
+                volume_dispensed_ml=final_volume_ml,
                 started_at=started_at,
                 finished_at=finished_at,
-                pulse_count=final_reading.pulse_count,
-                flow_rate_avg=final_reading.flow_rate_ml_s,
+                pulse_count=final_pulse_count,
+                flow_rate_avg=final_flow_rate,
                 status=final_status.value,
                 error_message=error_message
             )
@@ -240,12 +310,21 @@ class Dispenser:
             print(f"❌ Failed to save consumption: {e}")
             record = None
         
-        # Update status
+        # Update status to COMPLETED (not IDLE yet)
+        # This allows polling to detect the completion
         with self._lock:
-            self.status = DispenseStatus.IDLE
+            self.status = final_status  # Keep COMPLETED/INTERRUPTED/ERROR status
             self.current_payload = None
         
-        # Build result
+        # NÃO resetar aqui! Deixar os dados para o polling ler
+        # O reset vai acontecer na próxima dispensa via reset_pulse_count()
+        
+        print(f"📊 Dispense complete: {final_volume_ml:.1f}ml in {(datetime.utcnow() - started_at).total_seconds():.1f}s, status={final_status.value}")
+        
+        # Wait 3 seconds for polling to detect completion, then reset to IDLE
+        time.sleep(3)
+        with self._lock:
+            self.status = DispenseStatus.IDLE
         success = final_status == DispenseStatus.COMPLETED
         
         result = DispenseResult(
@@ -253,9 +332,9 @@ class Dispenser:
             status=final_status,
             sale_id=payload.sale_id,
             volume_authorized_ml=payload.volume_ml,
-            volume_dispensed_ml=final_reading.volume_ml,
-            duration_seconds=final_reading.duration_seconds,
-            pulse_count=final_reading.pulse_count,
+            volume_dispensed_ml=final_volume_ml,
+            duration_seconds=(finished_at - started_at).total_seconds(),
+            pulse_count=final_pulse_count,
             error_message=error_message,
             consumption_record=record
         )
