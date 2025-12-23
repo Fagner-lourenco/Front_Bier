@@ -10,9 +10,9 @@
     "use_mock": false
   },
   "machine": {
-    "_comment": "Dados da máquina para autenticação com SaaS",
-    "id": "40792dfc-828d-4f17-a3f2-3302396658e8",
-    "api_key": "sk_mdrWYgksCu0HAXts3OeOBJtK3CR9n6dNcUMQUwDuuWM"
+    "_comment": "Dados da máquina para autenticação com SaaS (do seed)",
+    "id": "7ef8ddb1-3a10-4678-8e56-a8aee3184c40",
+    "api_key": "sk_eKZVLSB56JEajCN70PJ4ResGqxH1B3L3W7CgNrJGIq4"
   },
   "payment_sdk": {
     "_comment": "Providers: mock, stone, cielo, pagseguro",
@@ -39,7 +39,7 @@
   "beverageEmojis": ["🍺", "🥥", "🍻", "🧃", "🥤"],
   "security": {
     "_comment": "Chave HMAC compartilhada entre APP e EDGE - DEVE SER IGUAL em ambos!",
-    "hmac_secret": "bierpass_edge_secret_key_2025_change_in_production",
+    "hmac_secret": "P9llzEpC52LsXIa-te9YSYH7ufzieNswt1aKFX9aNAU",
     "token_validity_seconds": 90
   },
   "_comment_debug": "⚠️ IMPORTANTE: Desativar debug antes de deploy em produção!",

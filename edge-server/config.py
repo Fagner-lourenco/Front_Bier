@@ -38,7 +38,7 @@ class SecurityConfig:
     # In production, load from environment variable
     HMAC_SECRET: str = os.getenv(
         "EDGE_HMAC_SECRET", 
-        "bierpass_edge_secret_key_2025_change_in_production"
+        "P9llzEpC52LsXIa-te9YSYH7ufzieNswt1aKFX9aNAU"
     )
     
     # Token expiry tolerance (seconds)
@@ -60,16 +60,16 @@ class SaaSConfig:
     # API Key for machine authentication
     API_KEY: str = os.getenv(
         "EDGE_API_KEY",
-        "sk_mdrWYgksCu0HAXts3OeOBJtK3CR9n6dNcUMQUwDuuWM"
+        "sk_eKZVLSB56JEajCN70PJ4ResGqxH1B3L3W7CgNrJGIq4"
     )
     # Machine ID (UUID from SaaS)
     MACHINE_ID: str = os.getenv(
         "EDGE_MACHINE_ID",
-        "40792dfc-828d-4f17-a3f2-3302396658e8"
+        "7ef8ddb1-3a10-4678-8e56-a8aee3184c40"
     )
     
-    # Sync interval (seconds)
-    SYNC_INTERVAL: int = 30
+    # Sync interval (seconds) - 0 = DESABILITADO (App reporta diretamente)
+    SYNC_INTERVAL: int = 0
     
     # Connection timeout (seconds)
     TIMEOUT: int = 10

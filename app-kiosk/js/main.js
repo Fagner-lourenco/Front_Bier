@@ -160,12 +160,16 @@ async function checkPendingTransactions() {
       console.log('[Recovery] Reenviando transação pendente:', lastTransaction);
       
       let result;
+      // Arredondar ml_served para inteiro (API espera integer, não float)
+      const mlServed = Math.round(lastTransaction.ml_served);
+      const mlAuthorized = Math.round(lastTransaction.ml_authorized || lastTransaction.ml_served);
+      
       if (AppConfig.api.use_mock) {
         result = await MockAPIs.reportConsume(
           lastTransaction.token,
-          window.APP.machineId,
-          lastTransaction.ml_served,
-          lastTransaction.ml_authorized || lastTransaction.ml_served,
+          AppConfig.machine.id,
+          mlServed,
+          mlAuthorized,
           lastTransaction.sale_id || null,
           'OK',
           lastTransaction.startedAt || lastTransaction.finishedAt,
@@ -174,9 +178,9 @@ async function checkPendingTransactions() {
       } else {
         result = await API.reportConsume(
           lastTransaction.token,
-          window.APP.machineId,
-          lastTransaction.ml_served,
-          lastTransaction.ml_authorized || lastTransaction.ml_served,
+          AppConfig.machine.id,
+          mlServed,
+          mlAuthorized,
           lastTransaction.sale_id || null,
           'OK',
           lastTransaction.startedAt || lastTransaction.finishedAt,
@@ -186,8 +190,8 @@ async function checkPendingTransactions() {
       
       if (result.ok) {
         console.log('[Recovery] Transação reenviada com sucesso!');
-        lastTransaction.synced = true;
-        Storage.saveTransaction(lastTransaction);
+        // Remove transação após sucesso para não reenviá-la novamente
+        Storage.remove('last_transaction');
       } else {
         console.warn('[Recovery] Falha ao reenviar (será tentado novamente):', result.error);
       }
@@ -212,7 +216,8 @@ async function checkPendingTransactions() {
  * Registra listeners de state change
  */
 function registerStateListeners() {
-  StateMachineInstance.on('stateChange', async (event) => {
+  // Escuta o evento emitido pela StateMachine
+  StateMachineInstance.on('state:change', async (event) => {
     console.log('[App] State mudou:', event.from, '→', event.to);
 
     // Renderiza tela
@@ -221,25 +226,8 @@ function registerStateListeners() {
       beverages: window.APP.beverages
     };
 
-    UI.render(event.to, data);    
-    // Se entrando em DISPENSING com resultado do EDGE real (não-mock), pula polling
-    if (event.to === 'DISPENSING' && !AppConfig.api.use_mock && event.data?.edgeResult?.result) {
-      const edgeResult = event.data.edgeResult.result;
-      console.log('[App] EDGE real já dispensou, pulando polling:', edgeResult);
-      
-      // Simula status final para o fluxo continuar
-      setTimeout(() => {
-        const finalStatus = {
-          state: 'FINISHED',
-          ml_served: Math.round(edgeResult.volume_dispensed_ml),
-          ml_authorized: edgeResult.volume_authorized_ml,
-          percentage: 100
-        };
-        
-        // Emite evento de dispensing completo
-        document.dispatchEvent(new CustomEvent('dispensingStatus', { detail: finalStatus }));
-      }, 1000); // Pequeno delay para mostrar animação
-    }  });
+    UI.render(event.to, data);
+  });
 }
 
 /**
@@ -248,20 +236,30 @@ function registerStateListeners() {
 function registerEventListeners() {
   // Dispensing status updates
   document.addEventListener('dispensingStatus', (event) => {
-    const status = event.detail;
+    const status = event.detail || {};
+    const dispenser = status.dispenser || status;
+    const dispStatus = (dispenser.status || status.state || '').toString().toUpperCase();
 
-    // Se chegou em FINISHED, reporta consumo e muda para FINISHED
-    if (status.state === 'FINISHED') {
+    // Quando concluir (COMPLETED/FINISHED), reporta consumo e garante transição para FINISHED
+    if (dispStatus === 'COMPLETED' || dispStatus === 'FINISHED') {
       const stateData = StateMachineInstance.getStateData();
-      
-      // Reporta consumo ao SaaS (em background, não bloqueia)
-      reportConsumeToSaaS(stateData, status).catch(err => {
+      const mlServed = dispenser.volume_dispensed_ml || dispenser.ml_served || 0;
+      const mlAuthorized = stateData.volume || dispenser.ml_authorized || dispenser.volume_authorized_ml;
+
+      // Reporta consumo ao SaaS (background)
+      reportConsumeToSaaS(stateData, {
+        ml_served: mlServed,
+        ml_authorized: mlAuthorized,
+        state: dispStatus
+      }).catch(err => {
         console.warn('[App] Erro ao reportar consumo (será reenviado):', err);
       });
-      
+
+      // Garante estado FINISHED com os dados corretos
       StateMachineInstance.setState('FINISHED', {
         ...stateData,
-        ml_served: status.ml_served
+        ml_served: mlServed,
+        ml_authorized: mlAuthorized
       });
     }
   });
@@ -290,15 +288,16 @@ async function reportConsumeToSaaS(stateData, status) {
     const token = Storage.getToken();
     const startedAt = stateData.dispensingStartedAt || new Date().toISOString();
     const finishedAt = new Date().toISOString();
-    const mlAuthorized = stateData.volume || status.ml_authorized;
+    const mlAuthorized = Math.round(stateData.volume || status.ml_authorized || 0);
+    const mlServed = Math.round(status.ml_served || 0);
     const saleId = window.APP.lastSaleId || null;
     
     let result;
     if (AppConfig.api.use_mock) {
       result = await MockAPIs.reportConsume(
         token,
-        window.APP.machineId,
-        status.ml_served,
+        AppConfig.machine.id,
+        mlServed,
         mlAuthorized,
         saleId,
         'OK',
@@ -308,8 +307,8 @@ async function reportConsumeToSaaS(stateData, status) {
     } else {
       result = await API.reportConsume(
         token,
-        window.APP.machineId,
-        status.ml_served,
+        AppConfig.machine.id,
+        mlServed,
         mlAuthorized,
         saleId,
         'OK',
@@ -322,7 +321,7 @@ async function reportConsumeToSaaS(stateData, status) {
       console.log('[App] Consumo reportado com sucesso');
       Storage.saveTransaction({
         token: token,
-        ml_served: status.ml_served,
+        ml_served: mlServed,
         ml_authorized: mlAuthorized,
         sale_id: saleId,
         beverage: stateData.beverage,
@@ -704,7 +703,7 @@ function computeHmacSha256Fallback(message, secret) {
  */
 async function registerSaleInSaaS(beverage, volumeMl, total, paymentMethod, sdkResult) {
   const saleData = {
-    machine_id: window.APP.machineId,
+    machine_id: AppConfig.machine.id,
     beverage_id: beverage.id,
     volume_ml: volumeMl,
     total_value: total,

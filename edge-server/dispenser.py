@@ -97,16 +97,17 @@ class Dispenser:
                 "current_sale_id": self.current_payload.sale_id if self.current_payload else None
             }
             
-            # Em modo MOCK durante dispensa ou logo após, usar dados simulados
-            if MOCK_GPIO and (self.status == DispenseStatus.DISPENSING or (self._mock_start_time and time.time() - self._mock_start_time < 10)):
-                # Usar dados simulados limpos
+            # Em modo MOCK durante dispensa apenas, usar dados simulados
+            # Se não está DISPENSING, reseta os dados simulados para não acumular
+            if MOCK_GPIO and self.status == DispenseStatus.DISPENSING:
+                # Usar dados simulados durante dispensa ativa
                 result.update({
                     "volume_dispensed_ml": round(self._mock_volume_ml, 1),
                     "duration_seconds": round(time.time() - self._mock_start_time, 2) if self._mock_start_time else 0.0,
                     "flow_rate_ml_s": 20.0  # Simulação de 20ml/s
                 })
             else:
-                # Usar dados reais do GPIO
+                # Usar dados reais do GPIO (ou dados zerados se não dispensando)
                 reading = gpio_controller.get_flow_reading()
                 result.update({
                     "volume_dispensed_ml": round(reading.volume_ml, 1),
@@ -315,9 +316,14 @@ class Dispenser:
         with self._lock:
             self.status = final_status  # Keep COMPLETED/INTERRUPTED/ERROR status
             self.current_payload = None
+            # Reset mock timestamp para não retornar dados antigos ao polling
+            self._mock_start_time = None
+            self._mock_volume_ml = 0.0
         
-        # NÃO resetar aqui! Deixar os dados para o polling ler
-        # O reset vai acontecer na próxima dispensa via reset_pulse_count()
+        # Resetar pulse_count IMEDIATAMENTE para não acumular na próxima dispensa
+        print(f"🔄 Resetting GPIO counters after dispense (pulse_count before: {gpio_controller.get_pulse_count()})")
+        gpio_controller.reset_pulse_count()
+        print(f"🔄 Reset complete (pulse_count after: {gpio_controller.get_pulse_count()})")
         
         print(f"📊 Dispense complete: {final_volume_ml:.1f}ml in {(datetime.utcnow() - started_at).total_seconds():.1f}s, status={final_status.value}")
         
@@ -325,6 +331,8 @@ class Dispenser:
         time.sleep(3)
         with self._lock:
             self.status = DispenseStatus.IDLE
+            self._mock_start_time = None
+            self._mock_volume_ml = 0.0
         success = final_status == DispenseStatus.COMPLETED
         
         result = DispenseResult(

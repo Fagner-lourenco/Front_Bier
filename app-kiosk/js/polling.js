@@ -44,6 +44,10 @@ const Polling = {
     }, this.intervalMs);
   },
 
+  startMock(intervalMs = null) {
+    this.start(intervalMs);
+  },
+
   /**
    * Para polling
    */
@@ -90,35 +94,33 @@ const Polling = {
       const status = result.data;
       
       // Atualiza o state data do StateMachine com os valores atuais
-      if (window.StateMachineInstance && status.dispenser) {
+      if (window.StateMachineInstance) {
+        const dispenserData = status.dispenser || status;
         window.StateMachineInstance.updateStateData({
-          dispensing_status: status.dispenser.status,
-          volume_dispensed: status.dispenser.volume_dispensed_ml || 0
+          dispensing_status: dispenserData.status,
+          volume_dispensed: dispenserData.volume_dispensed_ml || dispenserData.ml_served || 0
         });
       }
       
       this.emitStatus(status);
 
-      // Se a dispensa foi completada, para o polling e transiciona
-      if (status.dispenser && status.dispenser.status) {
-        const dispenserStatus = status.dispenser.status.toUpperCase();
+      // Se a dispensa foi completada/erro, para o polling e transiciona
+      const dispenserData = status.dispenser || status;
+      const dispenserStatus = (dispenserData.status || status.state || '').toString().toUpperCase();
+      
+      if (dispenserStatus === 'COMPLETED' || dispenserStatus === 'FINISHED') {
+        this.log(`✅ Dispensing ${dispenserStatus}! Volume: ${dispenserData.volume_dispensed_ml || dispenserData.ml_served}ml`);
+        this.stop();
         
-        if (dispenserStatus === 'COMPLETED') {
-          this.log(`✅ Dispensing COMPLETED! Volume: ${status.dispenser.volume_dispensed_ml}ml`);
-          this.stop();
-          
-          // Transiciona para FINISHED
-          if (window.StateMachineInstance) {
-            window.StateMachineInstance.setState('FINISHED', status.dispenser);
-          }
-        } else if (dispenserStatus === 'INTERRUPTED' || dispenserStatus === 'ERROR') {
-          this.log(`⚠️ Dispensing ${dispenserStatus}! Error: ${status.dispenser.error_message}`);
-          this.stop();
-          
-          // Volta para IDLE em caso de erro
-          if (window.StateMachineInstance) {
-            window.StateMachineInstance.setState('IDLE', { error: status.dispenser.error_message });
-          }
+        // NÃO transiciona aqui - o main.js vai fazer isso ao processar o evento 'dispensingStatus'
+        // Apenas emite o evento para que o handler no main.js possa processar corretamente
+      } else if (dispenserStatus === 'INTERRUPTED' || dispenserStatus === 'ERROR') {
+        this.log(`⚠️ Dispensing ${dispenserStatus}! Error: ${dispenserData.error_message || dispenserData.error}`);
+        this.stop();
+        
+        // Volta para IDLE em caso de erro
+        if (window.StateMachineInstance) {
+          window.StateMachineInstance.setState('IDLE', { error: dispenserData.error_message || dispenserData.error });
         }
       }
     } catch (error) {
@@ -142,20 +144,30 @@ const Polling = {
     document.dispatchEvent(event);
 
     // Atualiza state data com os campos corretos do EDGE
-    if (window.StateMachineInstance && status.dispenser) {
-      const dispenserData = status.dispenser;
-      
-      // Calcula percentual (se temos volume_authorized_ml do payload)
-      const volumeAuthorized = window.StateMachineInstance.getData().volume || 500;
-      const percentage = volumeAuthorized > 0 
-        ? Math.round((dispenserData.volume_dispensed_ml / volumeAuthorized) * 100)
-        : 0;
-      
+    if (window.StateMachineInstance) {
+      const stateData = window.StateMachineInstance.getData() || {};
+      const dispenserData = status.dispenser || status;
+
+      const volumeAuthorized = stateData.volume
+        || dispenserData.ml_authorized
+        || dispenserData.volume_authorized_ml
+        || 500;
+
+      const mlServed = dispenserData.volume_dispensed_ml
+        || dispenserData.ml_served
+        || 0;
+
+      const percentage = dispenserData.percentage != null
+        ? dispenserData.percentage
+        : (volumeAuthorized > 0
+          ? Math.round((mlServed / volumeAuthorized) * 100)
+          : 0);
+
       window.StateMachineInstance.updateStateData({
-        ml_served: dispenserData.volume_dispensed_ml,
+        ml_served: mlServed,
         ml_authorized: volumeAuthorized,
         percentage: Math.min(percentage, 100),
-        state: dispenserData.status
+        state: dispenserData.status || status.state
       });
     }
 

@@ -11,7 +11,7 @@ from ..schemas import ConsumptionCreate, ConsumptionResponse
 router = APIRouter()
 
 
-@router.post("/api/v1/consumptions", response_model=ConsumptionResponse)
+@router.post("", response_model=ConsumptionResponse)
 async def create_consumption(
     consumption_data: ConsumptionCreate,
     db: Session = Depends(get_db)
@@ -39,10 +39,16 @@ async def create_consumption(
         
         # Cria consumption
         consumption = Consumption(
+            organization_id=machine.organization_id,
             sale_id=consumption_data.sale_id,
             machine_id=consumption_data.machine_id,
-            dispensed_at=consumption_data.dispensed_at,
-            status=consumption_data.status or "completed"
+            token_id=consumption_data.token_id,
+            ml_served=consumption_data.ml_served,
+            ml_authorized=consumption_data.ml_authorized,
+            status=consumption_data.status or "OK",
+            error_message=consumption_data.error_message,
+            started_at=consumption_data.started_at,
+            finished_at=consumption_data.finished_at
         )
         
         db.add(consumption)
@@ -58,7 +64,7 @@ async def create_consumption(
         raise HTTPException(status_code=500, detail=f"Erro ao criar consumption: {str(e)}")
 
 
-@router.get("/api/v1/consumptions/{consumption_id}", response_model=ConsumptionResponse)
+@router.get("/{consumption_id}", response_model=ConsumptionResponse)
 async def get_consumption(
     consumption_id: int,
     db: Session = Depends(get_db)
@@ -76,7 +82,7 @@ async def get_consumption(
     return consumption
 
 
-@router.get("/api/v1/consumptions")
+@router.get("")
 async def list_consumptions(
     sale_id: int = None,
     machine_id: int = None,

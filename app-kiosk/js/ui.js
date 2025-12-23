@@ -656,7 +656,7 @@ const UI = {
    * TELA: FINISHED
    */
   render_FINISHED(data) {
-    const volume = data.volume || data.ml_served || 0;
+    const volume = data.ml_served || data.volume || 0;
     const beverage = data.beverage || {};
     const emoji = this.getBeverageEmoji(beverage.id);
     const finishedSeconds = Math.floor((this.config.ui?.finished_timeout_ms || 5000) / 1000);
@@ -696,14 +696,22 @@ const UI = {
     }
 
     // Extrai dados da estrutura do EDGE
-    const dispenserData = status.dispenser || {};
+    const dispenserData = status.dispenser || status || {};
     const stateData = window.StateMachineInstance.getData() || {};
-    const volumeAuthorized = stateData.volume || 500;
+    const volumeAuthorized = stateData.volume
+      || dispenserData.ml_authorized
+      || dispenserData.volume_authorized_ml
+      || stateData.ml_authorized
+      || 500;
     
-    const ml_served = dispenserData.volume_dispensed_ml || 0;
-    const percentage = volumeAuthorized > 0 
-      ? Math.round((ml_served / volumeAuthorized) * 100)
-      : 0;
+    const ml_served = dispenserData.volume_dispensed_ml
+      || dispenserData.ml_served
+      || 0;
+    const percentage = dispenserData.percentage != null
+      ? dispenserData.percentage
+      : (volumeAuthorized > 0 
+        ? Math.round((ml_served / volumeAuthorized) * 100)
+        : 0);
 
     const barra = document.getElementById('dispensing-barra');
     const mlServed = document.getElementById('ml-served');

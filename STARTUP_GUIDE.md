@@ -1,102 +1,224 @@
-# 🍺 BierPass - Guia de Inicialização
+# 🍺 BierPass - Guia de Inicialização Rápida
 
-## ⚠️ Problema Conhecido: Banco de Dados em Múltiplos Locais
+## ⚠️ Problema Crítico: Banco de Dados em Múltiplos Locais
 
-Durante o desenvolvimento, descobrimos um problema crítico: o FastAPI cria o arquivo `bierpass.db` no diretório **de onde é executado**, não no diretório do código-fonte.
+**SEMPRE inicie todos os servidores do diretório raiz** `D:\Front_Bier\`
 
-### O Problema
-- Se iniciar uvicorn de `D:\Front_Bier\`, o banco fica em `D:\Front_Bier\bierpass.db`
-- Se iniciar de `D:\Front_Bier\saas-backend\`, o banco fica em `D:\Front_Bier\saas-backend\bierpass.db`
-- Isso causa confusão porque a API carrega dados de um banco vazio enquanto os dados estão no outro
+Se iniciar de locais diferentes, o FastAPI cria `bierpass.db` em cada local, causando dados fragmentados.
 
-### A Solução
+---
 
-**SEMPRE inicie todos os servidores do diretório raiz** (`D:\Front_Bier\`):
+## 🚀 Inicialização Rápida (3 Terminais)
 
-```bash
-# Terminal 1: SaaS Backend (porta 3001)
+### Terminal 1: SaaS Backend (Porta 3001)
+```powershell
 cd D:\Front_Bier
 .\.venv\Scripts\python.exe -m uvicorn saas-backend.app.main:app --host 0.0.0.0 --port 3001 --reload
+```
+✅ Aguarde: `INFO:     Application startup complete`  
+✅ Teste: http://localhost:3001/api/v1/health
 
-# Terminal 2: EDGE Server (porta 5000)
+### Terminal 2: EDGE Server (Porta 5000)
+```powershell
 cd D:\Front_Bier
 .\.venv\Scripts\python.exe edge-server/app.py
+```
+✅ Aguarde: `✅ EDGE Server ready on 0.0.0.0:5000`
 
-# Terminal 3: HTTP Server (porta 8080)
+### Terminal 3: HTTP Server (Porta 8080)
+```powershell
 cd D:\Front_Bier
 .\.venv\Scripts\python.exe -m http.server 8080 --directory .
 ```
+✅ Aguarde: `Serving HTTP on 0.0.0.0 port 8080`
 
-### Inicialização Rápida (Script)
+---
 
-Crie um arquivo `start-all.bat` na raiz:
+## 🎯 Acessar a Aplicação
+
+**App Kiosk:** http://localhost:8080/app-kiosk/
+
+**APIs:**
+- SaaS Swagger: http://localhost:3001/docs
+- EDGE Status: http://localhost:5000/edge/status
+
+---
+
+## ✅ Checklist de Inicialização
+
+- [ ] 3 terminais abertos, todos em `D:\Front_Bier\`
+- [ ] SaaS Backend rodando na porta 3001
+- [ ] EDGE Server rodando na porta 5000
+- [ ] HTTP Server rodando na porta 8080
+- [ ] Banco de dados em `D:\Front_Bier\bierpass.db` (não em `saas-backend/`)
+- [ ] App carrega em http://localhost:8080/app-kiosk/
+- [ ] Sem erros de conexão no console (F12 → Console)
+
+---
+
+## 🔍 Verificar Dados no Banco
+
+```powershell
+cd D:\Front_Bier
+python check_sales.py
+```
+
+Mostra:
+- Últimas 5 vendas
+- Últimos 5 consumos
+- Total de transações
+- Total vendido
+
+---
+
+## 🧪 Teste Rápido
+
+1. Acesse http://localhost:8080/app-kiosk/
+2. Selecione "Chopp Pilsen"
+3. Confirme idade
+4. Escolha 300ml
+5. Pague com "Cartão de Crédito"
+6. Aguarde pagamento (3s simulado)
+7. Observe barra de progresso
+8. Veja resultado: "300ml" ✅
+
+**Esperado no banco:**
+```
+Vendas: 1
+Consumos: 1
+Volume: 300ml
+Valor: R$ 12.00
+```
+
+---
+
+## 📋 Configurações Importantes
+
+### Machine ID
+- **UUID:** `7ef8ddb1-3a10-4678-8e56-a8aee3184c40`
+- **Código:** `M001`
+- **Local:** app-kiosk/config.json + edge-server/config.py
+
+### HMAC Secret (Autenticação)
+- **Valor:** `P9llzEpC52LsXIa-te9YSYH7ufzieNswt1aKFX9aNAU`
+- **Local:** app-kiosk/config.json + edge-server/config.py
+- **⚠️ DEVE ser idêntico em ambos os locais**
+
+### Endpoints
+- **SaaS:** http://localhost:3001/api/v1/
+- **EDGE:** http://localhost:5000/edge/
+- **App:** http://localhost:8080/app-kiosk/
+
+---
+
+## 🐛 Problemas Comuns
+
+| Problema | Solução |
+|----------|---------|
+| **Connection refused na porta 3001** | SaaS não está rodando. Verifique Terminal 1 |
+| **Connection refused na porta 5000** | EDGE não está rodando. Verifique Terminal 2 |
+| **Banco vazio após venda** | Verificar se iniciou de `D:\Front_Bier\` (não outro local) |
+| **HMAC 401 error** | Verificar se hmac_secret é idêntico em config.json e config.py |
+| **Volume errado na tela final** | Reiniciar EDGE (Terminal 2) para limpar estado |
+| **Erro 422 no recovery** | ml_served não é inteiro. (Já foi fixado no código) |
+
+---
+
+## 📚 Documentação Completa
+
+Veja [FLUXO_COMPLETO.md](FLUXO_COMPLETO.md) para:
+- Arquitetura detalhada
+- Fluxo de transação passo a passo
+- Estrutura de banco de dados
+- Segurança HMAC
+- Troubleshooting avançado
+
+---
+
+## 🎬 Script de Inicialização Automática (Windows)
+
+Crie arquivo `start-all.bat` em `D:\Front_Bier\`:
 
 ```batch
 @echo off
-echo Iniciando BierPass em 3 terminais...
+echo ====================================
+echo Iniciando BierPass (3 Servidores)
+echo ====================================
 
-start "SaaS Backend" cmd /k "cd D:\Front_Bier && D:\.venv\Scripts\python.exe -m uvicorn saas-backend.app.main:app --host 0.0.0.0 --port 3001 --reload"
+start "SaaS Backend (3001)" cmd /k "cd D:\Front_Bier && .\.venv\Scripts\python.exe -m uvicorn saas-backend.app.main:app --host 0.0.0.0 --port 3001 --reload"
 
-start "EDGE Server" cmd /k "cd D:\Front_Bier && D:\.venv\Scripts\python.exe edge-server/app.py"
+timeout /t 2 /nobreak
 
-start "HTTP Server" cmd /k "cd D:\Front_Bier && D:\.venv\Scripts\python.exe -m http.server 8080 --directory ."
+start "EDGE Server (5000)" cmd /k "cd D:\Front_Bier && .\.venv\Scripts\python.exe edge-server/app.py"
 
-echo Todos os servidores iniciados!
+timeout /t 2 /nobreak
+
+start "HTTP Server (8080)" cmd /k "cd D:\Front_Bier && .\.venv\Scripts\python.exe -m http.server 8080 --directory ."
+
 echo.
-echo SaaS Backend:  http://localhost:3001
-echo EDGE Server:   http://localhost:5000
-echo App Kiosk:     http://localhost:8080/app-kiosk/
+echo ====================================
+echo Todos os servidores iniciados!
+echo ====================================
+echo.
+echo Acesse: http://localhost:8080/app-kiosk/
+echo.
+pause
 ```
 
-## 📋 Checklist de Inicialização
+Depois basta clicar duplo em `start-all.bat`.
 
-1. **Certifique-se que está em `D:\Front_Bier`**
-   ```bash
-   cd D:\Front_Bier
-   ```
+---
 
-2. **Ative o ambiente virtual** (se necessário)
-   ```bash
-   .\.venv\Scripts\Activate.ps1
-   ```
+## 📊 Stack da Aplicação
 
-3. **Inicie o SaaS Backend** (Terminal 1)
-   ```bash
-   .\.venv\Scripts\python.exe -m uvicorn saas-backend.app.main:app --host 0.0.0.0 --port 3001 --reload
-   ```
-   - Aguarde: `INFO:     Application startup complete.`
-   - Acesse: http://localhost:3001/docs (documentação da API)
+```
+┌─────────────────────────────────────────┐
+│     APP KIOSK (Frontend)                │
+│  HTML5 + CSS3 + JavaScript              │
+│  Rodando em: http://localhost:8080      │
+└─────────────────────────────────────────┘
+              ↓↑ HTTP
+┌─────────────────────────────────────────┐
+│     EDGE SERVER (Middleware)            │
+│  Python Flask + GPIO                    │
+│  Rodando em: http://localhost:5000      │
+│  Banco: edge_data.db (SQLite)           │
+└─────────────────────────────────────────┘
+              ↓↑ HTTP
+┌─────────────────────────────────────────┐
+│     SaaS BACKEND (API)                  │
+│  Python FastAPI + SQLAlchemy            │
+│  Rodando em: http://localhost:3001      │
+│  Banco: bierpass.db (SQLite)            │
+└─────────────────────────────────────────┘
+```
 
-4. **Inicie o EDGE Server** (Terminal 2)
-   ```bash
-   .\.venv\Scripts\python.exe edge-server/app.py
-   ```
-   - Aguarde: `✅ EDGE Server ready on 0.0.0.0:5000`
+---
 
-5. **Popule o banco de dados** (Terminal novo, uma única vez)
-   ```bash
-   cd D:\Front_Bier\saas-backend
-   .\.venv\Scripts\python.exe seed.py
-   ```
-   - Resultado: `⚠️  Banco já possui dados. Seed ignorado.` é OK
+## ✨ Recursos Principais
 
-6. **Inicie o HTTP Server** (Terminal 3)
-   ```bash
-   .\.venv\Scripts\python.exe -m http.server 8080 --directory .
-   ```
-   - Aguarde: `Serving HTTP on :: port 8080`
+✅ Fluxo de pagamento integrado (SDK Maquininha)  
+✅ Geração local de token HMAC  
+✅ Validação de token no EDGE  
+✅ Polling de status em tempo real  
+✅ Controle de dispensa com precisão  
+✅ Recuperação automática de transações pendentes  
+✅ Sincronização com SaaS  
+✅ Funcionamento offline (EDGE completa dispensa mesmo sem internet)  
 
-7. **Acesse a aplicação**
-   ```
-   http://localhost:8080/app-kiosk/index.html
-   ```
+---
 
-## ✅ Verificar se Tudo Está Funcionando
+## 📞 Suporte
 
-### Terminal de Testes
-```bash
-# Verificar se SaaS está respondendo
-curl http://localhost:3001/api/v1/health
+Se encontrar problemas:
+
+1. **Verifique os 3 servidores estão rodando** (Ctrl+Shift+Esc → procure `python`)
+2. **Verifique o console do App** (F12 → Console)
+3. **Verifique os logs dos servidores** (terminais)
+4. **Verifique o banco de dados** (`python check_sales.py`)
+5. **Leia [FLUXO_COMPLETO.md](FLUXO_COMPLETO.md)** para troubleshooting avançado
+
+
 
 # Verificar se EDGE está respondendo
 curl http://localhost:5000/edge/status

@@ -46,7 +46,7 @@ app.include_router(auth_router, prefix=settings.api_v1_prefix)
 app.include_router(beverages_router, prefix=settings.api_v1_prefix)
 app.include_router(machines_router, prefix=settings.api_v1_prefix)
 app.include_router(sales_router, prefix=settings.api_v1_prefix)
-app.include_router(consumptions_router, prefix=settings.api_v1_prefix)
+app.include_router(consumptions_router, prefix=f"{settings.api_v1_prefix}/consumptions")
 app.include_router(dashboard_router, prefix=settings.api_v1_prefix)
 app.include_router(stocks_router, prefix=settings.api_v1_prefix)
 

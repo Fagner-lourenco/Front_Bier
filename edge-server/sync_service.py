@@ -245,6 +245,12 @@ class SyncService:
         if self._running:
             return
         
+        # Não inicia se SYNC_INTERVAL = 0 (desabilitado)
+        if self.sync_interval <= 0:
+            print("🚫 Sync service DESABILITADO (SYNC_INTERVAL = 0)")
+            print("   App Kiosk reporta consumo diretamente ao SaaS")
+            return
+        
         self._running = True
         self._thread = threading.Thread(target=self._sync_loop, daemon=True)
         self._thread.start()
