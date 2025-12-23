@@ -1,0 +1,311 @@
+2025-12-23 02:21:14,313 - edge-server - INFO - \U0001f680 Starting EDGE Server...
+2025-12-23 02:21:14,348 - edge-server - INFO - \u2705 Database initialized
+2025-12-23 02:21:14,349 - edge-server - INFO - \u2705 GPIO initialized
+2025-12-23 02:21:14,351 - edge-server - INFO - \u2705 Sync service started
+2025-12-23 02:21:14,353 - edge-server - INFO - \u2705 EDGE Server ready on 0.0.0.0:5000
+2025-12-23 02:21:14,444 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-12-23 02:21:14,445 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-23 02:21:14,447 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 02:21:14,746 - edge-server - INFO - \U0001f680 Starting EDGE Server...
+2025-12-23 02:21:14,782 - edge-server - INFO - \u2705 Database initialized
+2025-12-23 02:21:14,783 - edge-server - INFO - \u2705 GPIO initialized
+2025-12-23 02:21:14,786 - edge-server - INFO - \u2705 Sync service started
+2025-12-23 02:21:14,787 - edge-server - INFO - \u2705 EDGE Server ready on 0.0.0.0:5000
+2025-12-23 02:21:14,828 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 02:21:14,831 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 02:25:19,406 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\sync_service.py', reloading
+Exception in thread Thread-2 (serve_forever):
+2025-12-23 02:25:19,412 - edge-server - INFO - \U0001f6d1 Shutting down EDGE Server...
+Traceback (most recent call last):
+  File "C:\Python313\Lib\threading.py", line 1041, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Python313\Lib\threading.py", line 992, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Front_Bier\.venv\Lib\site-packages\werkzeug\serving.py", line 819, in serve_forever
+    super().serve_forever(poll_interval=poll_interval)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\socketserver.py", line 235, in serve_forever
+    ready = selector.select(poll_interval)
+  File "C:\Python313\Lib\selectors.py", line 314, in select
+    r, w, _ = self._select(self._readers, self._writers, [], timeout)
+              ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\selectors.py", line 305, in _select
+    r, w, x = select.select(r, w, w, timeout)
+              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+OSError: [WinError 10038] Foi tentada uma opera��o em algum item que n�o � um soquete
+2025-12-23 02:25:24,416 - edge-server - INFO -   Sync service stopped
+Exception ignored in atexit callback <function shutdown at 0x000001EFA934ADE0>:
+Traceback (most recent call last):
+  File "D:\Front_Bier\edge-server\app.py", line 388, in shutdown
+  File "D:\Front_Bier\edge-server\gpio_controller.py", line 183, in cleanup
+    self.pump_off()
+  File "D:\Front_Bier\edge-server\gpio_controller.py", line 269, in pump_off
+    print(f"\u274c Pump OFF failed: {e}")
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u274c' in position 0: character maps to <undefined>
+2025-12-23 02:25:24,483 - werkzeug - INFO -  * Restarting with stat
+Traceback (most recent call last):
+  File "D:\Front_Bier\edge-server\gpio_controller.py", line 15, in <module>
+    import RPi.GPIO as GPIO
+ModuleNotFoundError: No module named 'RPi'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Front_Bier\edge-server\app.py", line 22, in <module>
+    from dispenser import dispenser
+  File "D:\Front_Bier\edge-server\dispenser.py", line 13, in <module>
+    from gpio_controller import gpio_controller, FlowReading
+  File "D:\Front_Bier\edge-server\gpio_controller.py", line 19, in <module>
+    print("\u26a0\ufe0f RPi.GPIO not available - using mock GPIO for development")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 0-1: character maps to <undefined>
+2025-12-23 02:25:24,967 - edge-server - INFO - \U0001f6d1 Shutting down EDGE Server...
+2025-12-23 02:25:29,978 - edge-server - INFO -   Sync service stopped
+Exception ignored in atexit callback <function shutdown at 0x00000227086DB060>:
+Traceback (most recent call last):
+  File "D:\Front_Bier\edge-server\app.py", line 388, in shutdown
+  File "D:\Front_Bier\edge-server\gpio_controller.py", line 183, in cleanup
+    self.pump_off()
+  File "D:\Front_Bier\edge-server\gpio_controller.py", line 269, in pump_off
+    print(f"\u274c Pump OFF failed: {e}")
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: 'charmap' codec can't encode character '\u274c' in position 0: character maps to <undefined>
+2025-12-23 07:35:36,016 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 07:35:36,023 - edge-server - INFO - ✅ Database initialized
+2025-12-23 07:35:36,024 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 07:35:36,025 - edge-server - INFO - ✅ Sync service started
+2025-12-23 07:35:36,026 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 07:35:36,234 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-12-23 07:35:36,235 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-23 07:35:36,241 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 07:35:36,517 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 07:35:36,518 - edge-server - INFO - ✅ Database initialized
+2025-12-23 07:35:36,518 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 07:35:36,519 - edge-server - INFO - ✅ Sync service started
+2025-12-23 07:35:36,519 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 07:35:36,549 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 07:35:36,553 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 07:37:00,731 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 07:37:00] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 07:37:41,236 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 07:37:41] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 07:39:22,787 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 07:39:22] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 08:02:34,225 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\app.py', reloading
+2025-12-23 08:02:34,229 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 08:02:39,241 - edge-server - INFO -   Sync service stopped
+2025-12-23 08:02:39,242 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 08:02:39,242 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 08:02:39,295 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 08:02:39,771 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 08:02:39,773 - edge-server - INFO - ✅ Database initialized
+2025-12-23 08:02:39,773 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 08:02:39,774 - edge-server - INFO - ✅ Sync service started
+2025-12-23 08:02:39,774 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 08:02:39,815 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 08:02:39,818 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 08:03:36,215 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 08:03:36,217 - edge-server - INFO - ✅ Database initialized
+2025-12-23 08:03:36,217 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 08:03:36,219 - edge-server - INFO - ✅ Sync service started
+2025-12-23 08:03:36,219 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 08:03:36,299 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-12-23 08:03:36,299 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-23 08:03:36,301 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 08:03:36,580 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 08:03:36,581 - edge-server - INFO - ✅ Database initialized
+2025-12-23 08:03:36,581 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 08:03:36,582 - edge-server - INFO - ✅ Sync service started
+2025-12-23 08:03:36,582 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 08:03:36,615 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 08:03:36,618 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 08:03:57,601 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\app.py', reloading
+2025-12-23 08:03:57,601 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 08:03:57,784 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\app.py', reloading
+2025-12-23 08:03:57,784 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 08:04:02,614 - edge-server - INFO -   Sync service stopped
+2025-12-23 08:04:02,615 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 08:04:02,615 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 08:04:02,657 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 08:04:02,786 - edge-server - INFO -   Sync service stopped
+2025-12-23 08:04:02,787 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 08:04:02,787 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 08:04:02,840 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 08:04:03,032 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 08:04:03,034 - edge-server - INFO - ✅ Database initialized
+2025-12-23 08:04:03,034 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 08:04:03,035 - edge-server - INFO - ✅ Sync service started
+2025-12-23 08:04:03,035 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 08:04:03,068 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 08:04:03,071 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 08:04:03,150 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 08:04:03,151 - edge-server - INFO - ✅ Database initialized
+2025-12-23 08:04:03,151 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 08:04:03,151 - edge-server - INFO - ✅ Sync service started
+2025-12-23 08:04:03,152 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 08:04:03,185 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 08:04:03,188 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 08:04:33,626 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 08:04:35,236 - edge-server - INFO -   Sync service stopped
+2025-12-23 08:04:35,237 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 08:04:35,237 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 08:04:35,301 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 08:04:40,309 - edge-server - INFO -   Sync service stopped
+2025-12-23 08:04:40,310 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 08:04:40,310 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 08:05:32,588 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:05:32] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 08:05:49,538 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:05:49] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 08:05:55,419 - edge-server - ERROR - Authorize error: 400 Bad Request: Failed to decode JSON object: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2025-12-23 08:05:55,419 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:05:55] "[35m[1mPOST /edge/authorize HTTP/1.1[0m" 500 -
+2025-12-23 08:06:20,420 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\app.py', reloading
+2025-12-23 08:06:20,420 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 08:06:25,428 - edge-server - INFO -   Sync service stopped
+2025-12-23 08:06:25,429 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 08:06:25,429 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 08:06:25,465 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 08:06:25,791 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 08:06:25,792 - edge-server - INFO - ✅ Database initialized
+2025-12-23 08:06:25,792 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 08:06:25,793 - edge-server - INFO - ✅ Sync service started
+2025-12-23 08:06:25,793 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 08:06:25,824 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 08:06:25,827 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 08:07:20,314 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:07:20] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 08:09:51,700 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:09:51] "GET /edge/health HTTP/1.1" 200 -
+2025-12-23 08:10:44,033 - edge-server - ERROR - Authorize error: 400 Bad Request: Failed to decode JSON object: Expecting property name enclosed in double quotes: line 2 column 5 (char 7)
+2025-12-23 08:10:44,033 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:10:44] "[35m[1mPOST /edge/authorize HTTP/1.1[0m" 500 -
+2025-12-23 08:10:52,898 - edge-server - ERROR - Authorize error: 400 Bad Request: Failed to decode JSON object: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2025-12-23 08:10:52,899 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:10:52] "[35m[1mPOST /edge/authorize HTTP/1.1[0m" 500 -
+2025-12-23 08:11:10,435 - edge-server - INFO - Token validated for sale test-sale-001, 300ml
+2025-12-23 08:11:13,983 - edge-server - INFO - Dispense complete: 344.4ml, success=True
+2025-12-23 08:11:13,983 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:11:13] "POST /edge/authorize HTTP/1.1" 200 -
+2025-12-23 08:11:25,099 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:11:25] "GET /edge/status HTTP/1.1" 200 -
+2025-12-23 08:16:40,932 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\config.py', reloading
+2025-12-23 08:16:40,933 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 08:16:45,935 - edge-server - INFO -   Sync service stopped
+2025-12-23 08:16:45,936 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 08:16:45,936 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 08:16:46,060 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 08:16:46,495 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 08:16:46,496 - edge-server - INFO - ✅ Database initialized
+2025-12-23 08:16:46,497 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 08:16:46,498 - edge-server - INFO - ✅ Sync service started
+2025-12-23 08:16:46,498 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 08:16:46,538 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 08:16:46,542 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 08:17:38,684 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 08:17:43,699 - edge-server - INFO -   Sync service stopped
+2025-12-23 08:17:43,700 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 08:17:43,700 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 08:17:43,755 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 08:17:48,761 - edge-server - INFO -   Sync service stopped
+2025-12-23 08:17:48,763 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 08:17:48,764 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 08:17:52,954 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 08:17:52,956 - edge-server - INFO - ✅ Database initialized
+2025-12-23 08:17:52,956 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 08:17:52,957 - edge-server - INFO - ✅ Sync service started
+2025-12-23 08:17:52,957 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 08:17:52,997 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-12-23 08:17:52,997 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-23 08:17:52,998 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 08:17:53,243 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 08:17:53,244 - edge-server - INFO - ✅ Database initialized
+2025-12-23 08:17:53,244 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 08:17:53,245 - edge-server - INFO - ✅ Sync service started
+2025-12-23 08:17:53,245 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 08:17:53,277 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 08:17:53,280 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 08:18:23,562 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:18:23] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 08:18:48,762 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\config.py', reloading
+2025-12-23 08:18:48,763 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 08:18:53,764 - edge-server - INFO -   Sync service stopped
+2025-12-23 08:18:53,765 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 08:18:53,765 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 08:18:53,836 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 08:18:54,140 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 08:18:54,142 - edge-server - INFO - ✅ Database initialized
+2025-12-23 08:18:54,142 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 08:18:54,143 - edge-server - INFO - ✅ Sync service started
+2025-12-23 08:18:54,144 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 08:18:54,178 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 08:18:54,181 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 08:26:14,556 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:26:14] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 08:30:12,559 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:30:12] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 08:35:57,675 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:35:57] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 08:38:42,500 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\app.py', reloading
+2025-12-23 08:38:42,502 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 08:38:47,514 - edge-server - INFO -   Sync service stopped
+2025-12-23 08:38:47,515 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 08:38:47,515 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 08:38:47,559 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 08:38:47,969 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 08:38:47,970 - edge-server - INFO - ✅ Database initialized
+2025-12-23 08:38:47,970 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 08:38:47,971 - edge-server - INFO - ✅ Sync service started
+2025-12-23 08:38:47,971 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 08:38:48,006 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 08:38:48,010 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 08:39:00,706 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 08:39:05,714 - edge-server - INFO -   Sync service stopped
+2025-12-23 08:39:05,715 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 08:39:05,715 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 08:39:05,767 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 08:39:10,778 - edge-server - INFO -   Sync service stopped
+2025-12-23 08:39:10,778 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 08:39:10,778 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 08:39:15,705 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 08:39:15,706 - edge-server - INFO - ✅ Database initialized
+2025-12-23 08:39:15,706 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 08:39:15,707 - edge-server - INFO - ✅ Sync service started
+2025-12-23 08:39:15,707 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 08:39:15,754 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.9:5000
+2025-12-23 08:39:15,755 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-23 08:39:15,756 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 08:39:16,009 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 08:39:16,010 - edge-server - INFO - ✅ Database initialized
+2025-12-23 08:39:16,010 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 08:39:16,011 - edge-server - INFO - ✅ Sync service started
+2025-12-23 08:39:16,011 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 08:39:16,038 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 08:39:16,042 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 08:39:40,260 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:39:40] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 08:41:20,343 - werkzeug - INFO -  * Detected change in 'D:\\Front_Bier\\edge-server\\app.py', reloading
+2025-12-23 08:41:20,344 - edge-server - INFO - 🛑 Shutting down EDGE Server...
+2025-12-23 08:41:24,295 - edge-server - INFO -   Sync service stopped
+2025-12-23 08:41:24,296 - edge-server - INFO -   GPIO cleaned up
+2025-12-23 08:41:24,296 - edge-server - INFO - 👋 EDGE Server stopped
+2025-12-23 08:41:24,342 - werkzeug - INFO -  * Restarting with stat
+2025-12-23 08:41:24,740 - edge-server - INFO - 🚀 Starting EDGE Server...
+2025-12-23 08:41:24,741 - edge-server - INFO - ✅ Database initialized
+2025-12-23 08:41:24,741 - edge-server - INFO - ✅ GPIO initialized
+2025-12-23 08:41:24,742 - edge-server - INFO - ✅ Sync service started
+2025-12-23 08:41:24,742 - edge-server - INFO - ✅ EDGE Server ready on 0.0.0.0:5000
+2025-12-23 08:41:24,779 - werkzeug - WARNING -  * Debugger is active!
+2025-12-23 08:41:24,783 - werkzeug - INFO -  * Debugger PIN: 947-950-466
+2025-12-23 08:42:33,902 - edge-server - ERROR - Authorize error: 400 Bad Request: Failed to decode JSON object: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+2025-12-23 08:42:33,903 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:42:33] "[35m[1mPOST /edge/authorize HTTP/1.1[0m" 500 -
+2025-12-23 08:43:22,071 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:43:22] "OPTIONS /edge/authorize HTTP/1.1" 200 -
+2025-12-23 08:45:39,597 - edge-server - INFO - Token validated for sale TESTE-SCRIPT-001, 200ml
+2025-12-23 08:45:42,146 - edge-server - INFO - Dispense complete: 246.7ml, success=True
+2025-12-23 08:45:42,147 - werkzeug - INFO - 127.0.0.1 - - [23/Dec/2025 08:45:42] "POST /edge/authorize HTTP/1.1" 200 -

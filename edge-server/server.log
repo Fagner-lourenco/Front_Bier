@@ -1,0 +1,44 @@
+[WARN] RPi.GPIO not available - using mock GPIO for development
+[OK] Database initialized: edge_data.db
+[MockGPIO] setmode(BCM)
+[MockGPIO] setup(pin=17, mode=OUT)
+[MockGPIO] output(pin=17, state=LOW)
+[MockGPIO] setup(pin=27, mode=IN)
+[MockGPIO] setup(pin=22, mode=OUT)
+[MockGPIO] setup(pin=23, mode=OUT)
+[MockGPIO] output(pin=22, state=LOW)
+[MockGPIO] output(pin=23, state=LOW)
+[MockGPIO] add_event_detect(pin=27)
+[MockGPIO] output(pin=22, state=HIGH)
+[OK] GPIO initialized - Pump: GPIO17, Sensor: GPIO27
+[INFO] Sync service started (interval: 30s)
+ * Serving Flask app 'app'
+ * Debug mode: on
+[WARN] RPi.GPIO not available - using mock GPIO for development
+[OK] Database initialized: edge_data.db
+[MockGPIO] setmode(BCM)
+[MockGPIO] setup(pin=17, mode=OUT)
+[MockGPIO] output(pin=17, state=LOW)
+[MockGPIO] setup(pin=27, mode=IN)
+[MockGPIO] setup(pin=22, mode=OUT)
+[MockGPIO] setup(pin=23, mode=OUT)
+[MockGPIO] output(pin=22, state=LOW)
+[MockGPIO] output(pin=23, state=LOW)
+[MockGPIO] add_event_detect(pin=27)
+[MockGPIO] output(pin=22, state=HIGH)
+[OK] GPIO initialized - Pump: GPIO17, Sensor: GPIO27
+[INFO] Sync service started (interval: 30s)
+[WARN] SaaS unreachable - skipping sync
+[WARN] SaaS unreachable - skipping sync
+[WARN] SaaS unreachable - skipping sync
+[WARN] SaaS unreachable - skipping sync
+[WARN] SaaS unreachable - skipping sync
+[MockGPIO] output(pin=17, state=LOW)
+[MockGPIO] output(pin=23, state=HIGH)
+[WARN] SaaS unreachable - skipping sync
+[WARN] SaaS unreachable - skipping sync
+[WARN] SaaS unreachable - skipping sync
+[WARN] SaaS unreachable - skipping sync
+[WARN] SaaS unreachable - skipping sync
+[MockGPIO] output(pin=17, state=LOW)
+[MockGPIO] output(pin=23, state=HIGH)

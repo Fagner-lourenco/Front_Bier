@@ -1,0 +1,378 @@
+/* ===== ANIMAÇÕES CUSTOMIZADAS ===== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes bounceSuccess {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes pulsar-opacidade {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes progressFill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.6);
+  }
+}
+
+/* ===== APLICAÇÃO DE ANIMAÇÕES ===== */
+
+/* Tela entra com fade + slide */
+.screen {
+  animation: slideUp 0.4s ease-out !important;
+}
+
+/* Card com hover */
+.card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  animation: none;
+}
+
+/* Botão com feedback */
+.botao {
+  position: relative;
+  overflow: hidden;
+}
+
+.botao::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.botao:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Barra de progresso suave */
+.barra-fill {
+  background: linear-gradient(
+    90deg,
+    var(--primary) 0%,
+    #ff8a50 50%,
+    var(--primary) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Estado de carregamento */
+.loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Estado de erro */
+.error-state {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Popup modal */
+.popup-overlay {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.popup-content {
+  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Icons animados */
+.icon-animated {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.icon-spinning {
+  animation: spin 2s linear infinite;
+}
+
+.icon-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Transições suaves entre states */
+.transition-fade {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.transition-slide-up {
+  animation: slideUp 0.4s ease-out;
+}
+
+.transition-slide-down {
+  animation: slideDown 0.4s ease-out;
+}
+
+.transition-scale {
+  animation: scaleIn 0.3s ease-out;
+}
+
+/* Dispensing barra progresso */
+.dispensing-progress {
+  animation: progressFill 20s linear forwards;
+}
+
+/* Success glow effect */
+.success-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Debug entries com fade in */
+.debug-log-entry {
+  animation: slideRight 0.2s ease-out;
+}
+
+/* Hover effects para botões de volume */
+.botao-volume:hover {
+  animation: none;
+}
+
+.botao-volume.selected {
+  animation: scaleIn 0.3s ease-out;
+}
+
+/* Efeito visual ao confirmar idade */
+.confirm-age-container {
+  animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Finished state celebração */
+.finished-icon {
+  animation: bounceSuccess 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ===== MEDIA QUERIES PARA ANIMAÇÕES ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Em dispositivos touchscreen, aumentar duração de animações */
+@media (hover: none) and (pointer: coarse) {
+  .screen {
+    animation: slideUp 0.6s ease-out;
+  }
+
+  .botao {
+    transition: all 0.4s ease;
+  }
+
+  .card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+/* Performance: usar GPU acceleration */
+.screen,
+.card,
+.botao,
+.barra-fill,
+.popup-content,
+.dispensing-icon {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Desabilitar durante impressão */
+@media print {
+  .screen,
+  .card,
+  .botao,
+  .barra-fill {
+    animation: none !important;
+    transition: none !important;
+  }
+}

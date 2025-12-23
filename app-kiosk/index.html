@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FF6B35">
+  <title>BierPass Kiosk</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/state-screens.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+  <!-- Screen Container (muda por estado) -->
+  <div id="app" class="app-container">
+    <!-- Renderizado dinamicamente por ui.js -->
+  </div>
+
+  <!-- Debug Console (remover em produção) -->
+  <div id="debug-panel" class="debug-panel" style="display: none;">
+    <div class="debug-header">
+      <span>DEBUG</span>
+      <button onclick="toggleDebugPanel()" style="background: none; border: none; color: #888; cursor: pointer; font-size: 20px;">✕</button>
+    </div>
+    <div id="debug-log" class="debug-log"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/validators.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/mock-apis.js"></script>
+  <script src="js/payment-sdk.js"></script>
+  <script src="js/state-machine.js"></script>
+  <script src="js/polling.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

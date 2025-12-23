@@ -1,0 +1,296 @@
+/* ===== RESPONSIVE DESIGN PARA TABLETS E DESKTOP ===== */
+
+/* Tablet Portrait (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .screen {
+    padding: 50px 60px;
+  }
+
+  .screen-title {
+    font-size: 32px;
+  }
+
+  .screen-subtitle {
+    font-size: 18px;
+  }
+
+  .botao {
+    padding: 20px 40px;
+    font-size: 18px;
+    min-width: 140px;
+  }
+
+  .botao-large {
+    padding: 28px 56px;
+    font-size: 22px;
+  }
+
+  .barra-container {
+    height: 50px;
+  }
+
+  .barra-percentage {
+    font-size: 28px;
+  }
+
+  .card {
+    padding: 24px;
+  }
+
+  .grid-2x2 {
+    gap: 24px;
+  }
+
+  .icon {
+    font-size: 64px;
+  }
+
+  .icon-large {
+    font-size: 96px;
+  }
+
+  .spinner-large {
+    width: 80px;
+    height: 80px;
+  }
+
+  .popup-content {
+    padding: 50px;
+    max-width: 500px;
+  }
+
+  .popup-title {
+    font-size: 28px;
+  }
+
+  .popup-message {
+    font-size: 18px;
+  }
+}
+
+/* Tablet Landscape (1025px+) */
+@media (min-width: 1025px) {
+  .screen {
+    padding: 60px 80px;
+  }
+
+  .screen-title {
+    font-size: 36px;
+  }
+
+  .screen-subtitle {
+    font-size: 20px;
+  }
+
+  .botao {
+    padding: 22px 48px;
+    font-size: 18px;
+    min-width: 160px;
+  }
+
+  .botao-large {
+    padding: 30px 60px;
+    font-size: 24px;
+    min-width: 240px;
+  }
+
+  .barra-container {
+    height: 56px;
+    margin: 24px 0;
+  }
+
+  .barra-text {
+    font-size: 18px;
+  }
+
+  .barra-percentage {
+    font-size: 32px;
+  }
+
+  .card {
+    padding: 28px;
+  }
+
+  .card-price {
+    font-size: 18px;
+  }
+
+  .grid-2x2 {
+    gap: 28px;
+  }
+
+  .icon {
+    font-size: 72px;
+  }
+
+  .icon-large {
+    font-size: 120px;
+  }
+
+  .spinner-large {
+    width: 100px;
+    height: 100px;
+    border-width: 8px;
+  }
+
+  .popup-content {
+    padding: 60px;
+    max-width: 600px;
+  }
+
+  .popup-title {
+    font-size: 32px;
+  }
+
+  .popup-message {
+    font-size: 20px;
+  }
+
+  .popup-buttons {
+    gap: 16px;
+  }
+}
+
+/* Landscape mode (altura menor) */
+@media (max-height: 600px) {
+  .screen {
+    padding: 20px 40px;
+    justify-content: center;
+  }
+
+  .screen-title {
+    font-size: 24px;
+    margin: 5px 0;
+  }
+
+  .screen-subtitle {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+
+  .botao {
+    padding: 12px 24px;
+    font-size: 14px;
+    margin: 4px;
+  }
+
+  .botao-large {
+    padding: 16px 32px;
+    font-size: 16px;
+  }
+
+  .grid-2x2 {
+    gap: 12px;
+    margin: 12px 0;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .icon {
+    font-size: 40px;
+    margin: 10px 0;
+  }
+
+  .icon-large {
+    font-size: 60px;
+  }
+
+  .barra-container {
+    height: 32px;
+    margin: 12px 0;
+  }
+
+  .barra-percentage {
+    font-size: 18px;
+  }
+}
+
+/* Mobile (menor que 768px) - fallback */
+@media (max-width: 767px) {
+  .screen {
+    padding: 30px 20px;
+  }
+
+  .screen-title {
+    font-size: 24px;
+  }
+
+  .screen-subtitle {
+    font-size: 14px;
+  }
+
+  .botao {
+    padding: 16px 28px;
+    font-size: 16px;
+    min-width: 100px;
+  }
+
+  .grid-2x2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Ultra-wide (desktop grande) */
+@media (min-width: 1400px) {
+  .screen {
+    padding: 80px 100px;
+  }
+
+  .screen-title {
+    font-size: 42px;
+  }
+
+  .screen-subtitle {
+    font-size: 22px;
+  }
+
+  .botao {
+    padding: 24px 56px;
+    font-size: 20px;
+    min-width: 180px;
+  }
+
+  .botao-large {
+    padding: 32px 72px;
+    font-size: 28px;
+    min-width: 280px;
+  }
+
+  .card {
+    padding: 32px;
+  }
+
+  .grid-2x2 {
+    gap: 32px;
+  }
+
+  .icon-large {
+    font-size: 140px;
+  }
+
+  .popup-content {
+    padding: 70px;
+    max-width: 700px;
+  }
+
+  .popup-title {
+    font-size: 36px;
+  }
+
+  .popup-message {
+    font-size: 22px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .debug-panel {
+    display: none;
+  }
+
+  .app-container {
+    background: white;
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "beverages": [
+    {
+      "id": "03c91279-bb24-467c-9a42-fb707a4eaa9d",
+      "name": "Chopp Pilsen",
+      "style": "Pilsen",
+      "abv": 4.5,
+      "price_per_ml": 0.04,
+      "image_url": "assets/images/beverages/chopp.png",
+      "active": true
+    },
+    {
+      "id": "f31ce553-5a02-4029-a100-1b689761f5fd",
+      "name": "Chopp IPA",
+      "style": "IPA",
+      "abv": 6.5,
+      "price_per_ml": 0.06,
+      "image_url": "assets/images/beverages/ipa.png",
+      "active": true
+    },
+    {
+      "id": "e83b3c86-46a6-4eeb-8882-2a91eacf892f",
+      "name": "Água de Coco",
+      "style": "Natural",
+      "abv": 0,
+      "price_per_ml": 0.03,
+      "image_url": "assets/images/beverages/agua-coco.png",
+      "active": true
+    },
+    {
+      "id": "d48c308a-b8e0-4bf6-ab17-eeca6b2f92ef",
+      "name": "Suco de Laranja",
+      "style": "Natural",
+      "abv": 0,
+      "price_per_ml": 0.035,
+      "image_url": "assets/images/beverages/suco-laranja.png",
+      "active": true
+    }
+  ]
+}

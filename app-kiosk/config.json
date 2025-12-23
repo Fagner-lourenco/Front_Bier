@@ -1,0 +1,48 @@
+{
+  "app": {
+    "name": "BierPass Kiosk",
+    "version": "1.1.0",
+    "language": "pt-BR"
+  },
+  "api": {
+    "saas_url": "http://localhost:3001",
+    "edge_url": "http://localhost:5000",
+    "use_mock": false
+  },
+  "machine": {
+    "_comment": "Dados da máquina para autenticação com SaaS",
+    "id": "40792dfc-828d-4f17-a3f2-3302396658e8",
+    "api_key": "sk_mdrWYgksCu0HAXts3OeOBJtK3CR9n6dNcUMQUwDuuWM"
+  },
+  "payment_sdk": {
+    "_comment": "Providers: mock, stone, cielo, pagseguro",
+    "provider": "mock",
+    "connection": "usb",
+    "device_id": null,
+    "card_timeout_ms": 120000,
+    "pix_timeout_ms": 300000
+  },
+  "ui": {
+    "polling_ms": 300,
+    "boot_duration_ms": 2000,
+    "idle_timeout_ms": 90000,
+    "confirm_age_timeout_ms": 20000,
+    "select_volume_timeout_ms": 60000,
+    "select_payment_timeout_ms": 60000,
+    "awaiting_payment_timeout_ms": 120000,
+    "pix_timeout_ms": 300000,
+    "dispensing_timeout_ms": 60000,
+    "finished_timeout_ms": 5000,
+    "barra_animation_speed_ms": 100
+  },
+  "volumes": [200, 300, 400, 500],
+  "beverageEmojis": ["🍺", "🥥", "🍻", "🧃", "🥤"],
+  "security": {
+    "_comment": "Chave HMAC compartilhada entre APP e EDGE - DEVE SER IGUAL em ambos!",
+    "hmac_secret": "bierpass_edge_secret_key_2025_change_in_production",
+    "token_validity_seconds": 90
+  },
+  "_comment_debug": "⚠️ IMPORTANTE: Desativar debug antes de deploy em produção!",
+  "debug": true,
+  "theme": "dark"
+}
