@@ -20,7 +20,7 @@ from ..utils.auth import get_current_user, get_machine_by_api_key, get_machine_o
 router = APIRouter(prefix="/beverages", tags=["Beverages"])
 
 
-@router.get("", response_model=BeverageListResponse)
+@router.get("")
 async def list_beverages(
     db: Session = Depends(get_db),
     machine: Optional[Machine] = Depends(get_machine_optional),
@@ -39,13 +39,30 @@ async def list_beverages(
     
     # Se tem máquina autenticada, filtra por organização
     if machine:
+        print(f"[API] Filtrando por machine org: {machine.organization_id}")
         query = query.filter(Beverage.organization_id == machine.organization_id)
+    else:
+        print("[API] Sem autenticação, retornando todas as bebidas")
     
     beverages = query.order_by(Beverage.display_order, Beverage.name).all()
+    print(f"[API] Total bebidas encontradas: {len(beverages)}")
+    for b in beverages:
+        print(f"  - {b.name}")
     
-    return BeverageListResponse(
-        beverages=[BeverageResponse.model_validate(b) for b in beverages]
-    )
+    # Converte manualmente para evitar problemas de serialização
+    beverage_list = []
+    for b in beverages:
+        beverage_list.append({
+            "id": b.id,
+            "name": b.name,
+            "style": b.style,
+            "abv": b.abv,
+            "price_per_ml": b.price_per_ml,
+            "image_url": b.image_url,
+            "active": b.active
+        })
+    
+    return {"beverages": beverage_list}
 
 
 @router.get("/{beverage_id}", response_model=BeverageResponse)

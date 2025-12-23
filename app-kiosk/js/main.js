@@ -532,7 +532,7 @@ async function processPaymentWithSDK(beverage, volumeMl, paymentMethod, total) {
 
     // Autoriza no EDGE (envia token HMAC completo)
     // EDGE real: operação bloqueante que dispensa e retorna resultado
-    // Mock: retorna imediatamente e usa polling
+    // Autoriza com EDGE
     const edgeResult = await authorizeEdge(tokenData.token);
 
     // Define volume no mock para simulação correta

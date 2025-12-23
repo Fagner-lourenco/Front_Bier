@@ -27,14 +27,18 @@ from sync_service import sync_service
 
 app = Flask(__name__)
 
-# Enable CORS for APP Kiosk (allow JSON headers + POST preflight)
-CORS(
-    app,
-    resources={r"/edge/*": {"origins": ["http://localhost:5500", "http://127.0.0.1:5500"]}},
-    methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type", "Accept", "X-Requested-With", "X-API-Key"],
-    expose_headers=["Content-Type"]
-)
+# Enable CORS for APP Kiosk - universal for local development
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=False)
+
+# Manual CORS headers for all responses
+@app.after_request
+def add_cors_headers(response):
+    """Add CORS headers to every response"""
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Accept, X-Requested-With, X-API-Key'
+    response.headers['Access-Control-Max-Age'] = '3600'
+    return response
 
 # Setup logging
 logging.basicConfig(

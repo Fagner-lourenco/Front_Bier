@@ -1,258 +1,251 @@
 /**
  * STATE-MACHINE.JS
- * Máquina de estados do APP
+ * Máquina de estados central da aplicação
+ * Transições, timeouts, eventos
  */
 
 class StateMachine {
   constructor(config) {
     this.config = config;
-    this.currentState = null; // Inicia como null, será configurado no initApp
+    this.state = null;
     this.previousState = null;
-    this.stateData = {};
+    this.data = {};
     this.timeout = null;
-    this.listeners = {};
-    
-    this.defineStates();
-    this.log('State Machine inicializado');
+    this.listeners = [];
+
+    console.log('[StateMachine] State Machine inicializado');
   }
 
   /**
-   * Define os states disponíveis e seus timeouts
+   * Define estados válidos e suas transições
    */
   defineStates() {
-    this.states = {
+    return {
       BOOT: {
+        next: 'IDLE',
         timeout: this.config.ui.boot_duration_ms,
-        next: 'IDLE'
+        onEnter: () => {},
+        onExit: () => {},
       },
       IDLE: {
+        next: null,
         timeout: this.config.ui.idle_timeout_ms,
-        next: 'IDLE' // volta para si mesmo
+        onEnter: () => {
+          // Renderiza cardápio
+          UI.render('IDLE', { beverages: window.APP.beverages || [] });
+        },
+        onExit: () => {},
       },
       CONFIRM_AGE: {
+        next: 'SELECT_VOLUME',
         timeout: this.config.ui.confirm_age_timeout_ms,
-        next: 'IDLE'
+        onEnter: () => {
+          UI.render('CONFIRM_AGE', this.data);
+        },
+        onExit: () => {},
       },
       SELECT_VOLUME: {
-        timeout: this.config.ui.select_volume_timeout_ms || 60000,
-        next: 'IDLE'
+        next: 'SELECT_PAYMENT',
+        timeout: this.config.ui.select_volume_timeout_ms,
+        onEnter: () => {
+          UI.render('SELECT_VOLUME', this.data);
+        },
+        onExit: () => {},
       },
       SELECT_PAYMENT: {
-        timeout: this.config.ui.select_payment_timeout_ms || 60000,
-        next: 'IDLE'
+        next: 'AWAITING_PAYMENT',
+        timeout: this.config.ui.select_payment_timeout_ms,
+        onEnter: () => {
+          UI.render('SELECT_PAYMENT', this.data);
+        },
+        onExit: () => {},
       },
       AWAITING_PAYMENT: {
-        timeout: this.config.ui.awaiting_payment_timeout_ms || 120000,
-        next: 'IDLE' // timeout volta para IDLE
+        next: null,
+        timeout: this.config.ui.awaiting_payment_timeout_ms,
+        onEnter: () => {
+          UI.render('AWAITING_PAYMENT', this.data);
+        },
+        onExit: () => {},
       },
       PAYMENT_DENIED: {
+        next: 'IDLE',
         timeout: 3000,
-        next: 'IDLE'
+        onEnter: () => {
+          UI.render('PAYMENT_DENIED', this.data);
+        },
+        onExit: () => {
+          this.data = {};
+        },
       },
       AUTHORIZED: {
+        next: 'DISPENSING',
         timeout: 1000,
-        next: 'DISPENSING'
+        onEnter: () => {
+          UI.render('AUTHORIZED', this.data);
+        },
+        onExit: () => {},
       },
       DISPENSING: {
-        timeout: this.config.ui.dispensing_timeout_ms || 60000,
-        next: 'IDLE'
+        next: null,
+        timeout: this.config.ui.dispensing_timeout_ms,
+        onEnter: () => {
+          UI.render('DISPENSING', this.data);
+          // Inicia polling no EDGE
+          if (this.config.api.use_mock) {
+            Polling.startMock();
+          } else {
+            Polling.start();
+          }
+        },
+        onExit: () => {
+          Polling.stop();
+        },
       },
       FINISHED: {
+        next: 'IDLE',
         timeout: this.config.ui.finished_timeout_ms,
-        next: 'IDLE'
-      }
+        onEnter: () => {
+          UI.render('FINISHED', this.data);
+        },
+        onExit: () => {
+          this.data = {};
+        },
+      },
     };
   }
 
   /**
-   * Muda para um novo estado
+   * Muda para novo estado
    */
   setState(newState, data = {}) {
-    if (!this.states[newState]) {
-      this.log('ERRO: State inválido:', newState);
+    const states = this.defineStates();
+
+    // Valida estado
+    if (!states[newState]) {
+      console.error(`[StateMachine] Estado inválido: ${newState}`);
       return false;
     }
 
-    if (this.currentState === newState && Object.keys(data).length === 0) {
-      this.log('State já é', newState, 'ignorando');
-      return false;
-    }
+    const stateConfig = states[newState];
 
-    // Sai do state anterior
-    this.onStateExit(this.currentState);
-
-    // Muda state
-    this.previousState = this.currentState;
-    this.currentState = newState;
-    // Preserva dados anteriores se não foram passados novos (ex: timeout automático)
-    this.stateData = Object.keys(data).length > 0 ? data : this.stateData;
-
-    // Entra no novo state
-    this.onStateEnter(newState);
-
-    this.log(`State change: ${this.previousState} → ${newState}`, this.stateData);
-    this.emit('stateChange', { from: this.previousState, to: newState, data: this.stateData });
-
-    return true;
-  }
-
-  /**
-   * Roda ao sair de um state
-   */
-  onStateExit(state) {
     // Limpa timeout anterior
     if (this.timeout) {
       clearTimeout(this.timeout);
       this.timeout = null;
     }
 
-    // Limpa listener de polling se houver
-    if (state === 'DISPENSING' && window.Polling) {
-      Polling.stop();
+    // Executa callback de saída do estado anterior
+    if (this.state && states[this.state]) {
+      this.onStateExit(this.state);
     }
 
-    // Lógica específica ao sair de cada state
-    switch (state) {
-      case 'BOOT':
-        break;
-      case 'IDLE':
-        // Limpa dados ao sair
-        this.stateData = {};
-        break;
-      case 'DISPENSING':
-        // Salva dados de consumo
-        break;
-      case 'FINISHED':
-        // Reset dados
-        this.stateData = {};
-        break;
+    // Armazena dados do novo estado
+    this.previousState = this.state;
+    this.state = newState;
+    this.data = { ...this.data, ...data };
+
+    // Emite evento de mudança de estado
+    this.emit('state:change', { from: this.previousState, to: newState, data: this.data });
+
+    // Executa callback de entrada do novo estado
+    this.onStateEnter(newState);
+
+    // Define timeout para transição automática
+    if (stateConfig.timeout) {
+      console.log(`[StateMachine] ⏱️ Timeout de ${stateConfig.timeout}ms configurado para ${newState}`);
+      this.timeout = setTimeout(() => {
+        console.log(`[StateMachine] ⏱️ TIMEOUT DISPARADO! ${newState} → ${stateConfig.next || 'TIMEOUT'}`);
+        if (stateConfig.next) {
+          this.setState(stateConfig.next);
+        }
+      }, stateConfig.timeout);
+    }
+
+    return true;
+  }
+
+  /**
+   * Callback executado ao entrar em um estado
+   */
+  onStateEnter(state) {
+    const states = this.defineStates();
+    if (states[state] && states[state].onEnter) {
+      console.log(`[StateMachine] State change: ${this.previousState} → ${state}`, this.data);
+      states[state].onEnter();
     }
   }
 
   /**
-   * Roda ao entrar em um state
+   * Callback executado ao sair de um estado
    */
-  onStateEnter(state) {
-    const stateConfig = this.states[state];
-
-    // Salva no localStorage para recovery
-    Storage.saveAppState(state, this.stateData);
-
-    // Configura timeout do state
-    if (stateConfig.timeout) {
-      this.log(`⏱️ Timeout de ${stateConfig.timeout}ms configurado para ${state}`);
-      this.timeout = setTimeout(() => {
-        this.log(`⏱️ TIMEOUT DISPARADO! ${state} → ${stateConfig.next}`);
-        this.setState(stateConfig.next);
-      }, stateConfig.timeout);
-    } else {
-      this.log(`⏱️ Sem timeout para ${state}`);
+  onStateExit(state) {
+    const states = this.defineStates();
+    if (states[state] && states[state].onExit) {
+      states[state].onExit();
     }
+  }
 
-    // Lógica específica ao entrar em cada state
-    switch (state) {
-      case 'BOOT':
-        this.log('🚀 APP booting...');
-        break;
+  /**
+   * Obtém estado atual
+   */
+  getState() {
+    return this.state;
+  }
 
-      case 'IDLE':
-        this.log('Aguardando interação do usuário');
-        // Reset do progresso apenas se mock ativo
-        if (this.config.api.use_mock && window.MockAPIs) {
-          MockAPIs.resetDispenseProgress();
-        }
-        break;
+  /**
+   * Obtém dados do estado
+   */
+  getData() {
+    return this.data;
+  }
 
-      case 'PAYMENT_PROCESSING':
-        this.log('Processing payment...');
-        break;
+  /**
+   * Alias para getData()
+   */
+  getStateData() {
+    return this.data;
+  }
 
-      case 'DISPENSING':
-        this.log('Starting to dispense');
-        // Registra timestamp de início para reportar ao SaaS
-        this.stateData.dispensingStartedAt = new Date().toISOString();
-        
-        // Para MOCK: inicia polling para simular progresso
-        // Para EDGE REAL: o listener em main.js cuida de emitir o evento final
-        // Polling só é necessário se não temos resultado do EDGE ainda
-        if (this.config.api.use_mock && window.Polling) {
-          this.log('Modo mock - iniciando polling para simular progresso');
-          Polling.start(this.config.ui.polling_ms);
-        } else {
-          this.log('Modo EDGE real - aguardando evento de conclusão');
-        }
-        break;
+  /**
+   * Atualiza dados do estado atual
+   */
+  updateStateData(newData) {
+    this.data = { ...this.data, ...newData };
+    this.emit('state:data-updated', this.data);
+    return this.data;
+  }
 
-      case 'FINISHED':
-        this.log('Finished, going back to IDLE');
-        break;
-    }
+  /**
+   * Força transição imediata
+   */
+  forceTransition(toState, data = {}) {
+    console.log(`[StateMachine] Transição forçada: ${this.state} → ${toState}`);
+    this.setState(toState, data);
   }
 
   /**
    * Registra listener para eventos
    */
   on(event, callback) {
-    if (!this.listeners[event]) {
-      this.listeners[event] = [];
-    }
-    this.listeners[event].push(callback);
+    this.listeners.push({ event, callback });
   }
 
   /**
    * Remove listener
    */
   off(event, callback) {
-    if (!this.listeners[event]) return;
-    this.listeners[event] = this.listeners[event].filter(cb => cb !== callback);
+    this.listeners = this.listeners.filter(l => l.event !== event || l.callback !== callback);
   }
 
   /**
    * Emite evento
    */
   emit(event, data) {
-    if (!this.listeners[event]) return;
-    this.listeners[event].forEach(callback => callback(data));
-  }
-
-  /**
-   * Retorna estado atual
-   */
-  getState() {
-    return this.currentState;
-  }
-
-  /**
-   * Retorna dados do estado atual
-   */
-  getStateData() {
-    return this.stateData;
-  }
-
-  /**
-   * Atualiza dados do estado atual
-   */
-  updateStateData(updates) {
-    this.stateData = { ...this.stateData, ...updates };
-    Storage.saveAppState(this.currentState, this.stateData);
-  }
-
-  /**
-   * Recupera estado anterior
-   */
-  getPreviousState() {
-    return this.previousState;
-  }
-
-  /**
-   * Log interno
-   */
-  log(...args) {
-    if (window.APP && window.APP.debug) {
-      console.log('[StateMachine]', ...args);
-    }
+    this.listeners.forEach(l => {
+      if (l.event === event) {
+        l.callback(data);
+      }
+    });
   }
 }
-
-// Exportar para uso global
-window.StateMachine = StateMachine;
